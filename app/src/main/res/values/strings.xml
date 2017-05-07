@@ -3,4 +3,6 @@
     <string name="products">Products</string>
     <string name="events">Events</string>
     <string name="calculate">Calculate</string>
+  <string name="single_barrier_calculator">Single Barrier-Type Calculator</string>
+  <string name="multi_barrier_calculator">Multiple Barrier-Types Calculator</string>
 </resources>

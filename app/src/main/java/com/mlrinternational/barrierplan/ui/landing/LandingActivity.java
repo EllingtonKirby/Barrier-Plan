@@ -27,6 +27,8 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
   @Override protected void onCreate(@Nullable final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     fragmentManager = getSupportFragmentManager();
+    //Default
+    presenter.onNavigationItemSelected(NavigationFactory.NavigationItem.CALCULATE);
   }
 
   public static void start(final Context context) {

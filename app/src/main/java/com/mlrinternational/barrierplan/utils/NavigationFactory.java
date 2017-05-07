@@ -2,6 +2,7 @@ package com.mlrinternational.barrierplan.utils;
 
 import android.view.MenuItem;
 import com.mlrinternational.barrierplan.R;
+import com.mlrinternational.barrierplan.ui.base.BaseBarrierPlanFragment;
 
 public class NavigationFactory {
 
@@ -20,6 +21,10 @@ public class NavigationFactory {
         return NavigationItem.CALCULATE;
     }
   }
+
+  //public <T extends BaseBarrierPlanFragment> <T> getFragmentForBehavior() {
+  //
+  //}
 
   public enum NavigationItem{
     CALCULATE, EVENTS, PRODUCTS
