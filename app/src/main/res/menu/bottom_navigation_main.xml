@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+      android:id="@+id/action_calculate"
+      android:enabled="true"
+      android:icon="@drawable/ic_edit_white_24dp"
+      android:title="@string/calculate"
+      app:showAsAction="ifRoom" />
+  <item
+      android:id="@+id/action_events"
+      android:enabled="true"
+      android:icon="@drawable/ic_event_white_24dp"
+      android:title="@string/events"
+      app:showAsAction="ifRoom" />
+  <item
+      android:id="@+id/action_products"
+      android:enabled="true"
+      android:icon="@drawable/ic_more_white_24dp"
+      android:title="@string/products"
+      app:showAsAction="ifRoom" />
+</menu>
