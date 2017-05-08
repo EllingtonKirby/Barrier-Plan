@@ -2,33 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/spacing_16dp"
-    android:layout_marginRight="@dimen/spacing_16dp"
     android:orientation="vertical"
     >
-  <android.support.v7.widget.CardView
-      android:id="@+id/single_barrier_container"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/card_background"
-      >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/single_barrier_calculator"
-        />
-  </android.support.v7.widget.CardView>
-
-  <android.support.v7.widget.CardView
-      android:id="@+id/multi_barrier_container"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@drawable/card_background"
-      >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/multi_barrier_calculator"
-        />
-  </android.support.v7.widget.CardView>
+  <include layout="@layout/content_single_calculator"/>
+  <include layout="@layout/content_multi_calculator"/>
 </LinearLayout>

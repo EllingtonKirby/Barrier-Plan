@@ -5,4 +5,11 @@
     <string name="calculate">Calculate</string>
   <string name="single_barrier_calculator">Single Barrier-Type Calculator</string>
   <string name="multi_barrier_calculator">Multiple Barrier-Types Calculator</string>
+  <string name="length_needed">Length Needed = </string>
+  <string name="feet">feet</string>
+  <string name="result">Result</string>
+  <string name="zero">0</string>
+  <string name="barriers">Barriers</string>
+  <string name="remainder">Remainder</string>
+  <string name="add_barrier_type">Add a Barrier Type</string>
 </resources>

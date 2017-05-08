@@ -53,4 +53,6 @@ dependencies {
 
   compile "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
   apt "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
+
+  compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 }

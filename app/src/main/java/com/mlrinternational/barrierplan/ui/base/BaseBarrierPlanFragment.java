@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseBarrierPlanFragment extends Fragment {
 
-  private BarrierPlanFragmentListener listener;
+  protected BarrierPlanFragmentListener listener;
 
   public abstract @LayoutRes int getLayoutId();
 

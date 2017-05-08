@@ -8,12 +8,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity<P extends BasePresenter, V extends BaseView>
-    extends FragmentActivity {
+    extends AppCompatActivity {
 
   protected P presenter;
 
@@ -31,6 +32,8 @@ public abstract class BaseActivity<P extends BasePresenter, V extends BaseView>
     super.onStart();
     presenter.bindView(getPresenterViewType());
   }
+
+
 
   @Override protected void onDestroy() {
     presenter.onDestroy();
