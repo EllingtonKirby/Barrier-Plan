@@ -12,6 +12,7 @@ import android.support.v4.util.Pair;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import butterknife.BindView;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierType;
 import com.mlrinternational.barrierplan.ui.base.BarrierPlanFragmentListener;
@@ -28,7 +29,6 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
   private final NavigationFactory navigationFactory = new NavigationFactory();
   private final BottomNavigationView.OnNavigationItemReselectedListener navListener =
       item -> presenter.onNavigationItemSelected(navigationFactory.getNavigationItem(item));
-
   private FragmentManager fragmentManager;
 
   @Override protected void onCreate(@Nullable final Bundle savedInstanceState) {
