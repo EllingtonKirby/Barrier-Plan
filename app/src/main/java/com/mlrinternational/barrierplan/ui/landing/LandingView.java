@@ -7,5 +7,5 @@ public interface LandingView extends BaseView {
 
   void showEvents();
 
-  void showProductS();
+  void showProducts();
 }

@@ -15,5 +15,5 @@
   <string name="barrier_plan">Barrier Plan</string>
   <string name="metric">Units</string>
   <string name="choose_units">Choose the units</string>
-  <string name="meters">Meters</string>
+  <string name="meters">meters</string>
 </resources>

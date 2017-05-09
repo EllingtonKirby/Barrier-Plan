@@ -1,11 +1,12 @@
 package com.mlrinternational.barrierplan.ui.calculate;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -13,6 +14,10 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierType;
 import com.mlrinternational.barrierplan.ui.base.BaseBarrierPlanFragment;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.Subject;
+
+import static com.mlrinternational.barrierplan.ui.landing.LandingPresenter.IMPERIAL_STRING;
 
 public class CalculateFragment extends BaseBarrierPlanFragment {
 
@@ -24,8 +29,14 @@ public class CalculateFragment extends BaseBarrierPlanFragment {
   @BindView(R.id.single_barrier_result) View singleBarrierResult;
   @BindView(R.id.multi_barrier_result) View multiBarrierResult;
   @BindView(R.id.text_entry_length_needed) EditText singleCalcEditText;
+  @BindView(R.id.unit) TextView unit;
 
   private BarrierType currentSingleType = BarrierType.MOVIT;
+  private Subject<String> metricChanged;
+  private Disposable singleCalcEditTextDisposable;
+  private Disposable btnMinitDisposable;
+  private Disposable btnMovitDisposable;
+  private Disposable metricChangedDisposable;
 
   public static CalculateFragment getInstance() {
     return new CalculateFragment();
@@ -35,33 +46,27 @@ public class CalculateFragment extends BaseBarrierPlanFragment {
     return R.layout.fragment_calculate;
   }
 
+  @Override public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    metricChanged = listener.getMetricChangedObservable();
+  }
+
   @Override public void onResume() {
     super.onResume();
     observeViews();
   }
 
-  private void observeViews() {
-    RxView.keys(singleCalcEditText)
-        .subscribe(
-            keyEvent -> {
-              if (keyEvent.getAction() == KeyEvent.ACTION_DOWN
-                  && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                displaySingleCalcResult();
-              }
-            }
-        );
-
-    RxView.clicks(btnMinit)
-        .filter(o -> currentSingleType != BarrierType.MINIT)
-        .subscribe(
-            o -> changeSingleCalcBarrierType()
-        );
-
-    RxView.clicks(btnMovit)
-        .filter(o -> currentSingleType != BarrierType.MOVIT)
-        .subscribe(
-            o -> changeSingleCalcBarrierType()
-        );
+  @Override public void onDestroy() {
+    super.onDestroy();
+    singleCalcEditTextDisposable.dispose();
+    btnMinitDisposable.dispose();
+    btnMovitDisposable.dispose();
+    metricChangedDisposable.dispose();
+    metricChangedDisposable = null;
+    metricChanged = null;
+    singleCalcEditTextDisposable = null;
+    btnMinitDisposable = null;
+    btnMovit = null;
   }
 
   private void changeSingleCalcBarrierType() {
@@ -90,5 +95,38 @@ public class CalculateFragment extends BaseBarrierPlanFragment {
     resultText.setText(String.valueOf(resultAmount.first));
     final String remainder = String.valueOf(resultAmount.second) + listener.getMetricString();
     remainderText.setText(remainder);
+  }
+
+  private void observeViews() {
+    singleCalcEditTextDisposable = RxView.keys(singleCalcEditText)
+        .subscribe(
+            keyEvent -> {
+              if (keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                  && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                displaySingleCalcResult();
+              }
+            }
+        );
+
+    btnMinitDisposable = RxView.clicks(btnMinit)
+        .filter(o -> currentSingleType != BarrierType.MINIT)
+        .subscribe(
+            o -> changeSingleCalcBarrierType()
+        );
+
+    btnMovitDisposable = RxView.clicks(btnMovit)
+        .filter(o -> currentSingleType != BarrierType.MOVIT)
+        .subscribe(
+            o -> changeSingleCalcBarrierType()
+        );
+
+    metricChangedDisposable = metricChanged.subscribe(this::onMetricChanged);
+  }
+
+  private void onMetricChanged(final String metric) {
+    final String unitString = getString(
+        IMPERIAL_STRING.equals(metric) ? R.string.feet : R.string.meters
+    );
+    unit.setText(unitString);
   }
 }

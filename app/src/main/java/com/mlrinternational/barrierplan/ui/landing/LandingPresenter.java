@@ -1,6 +1,5 @@
 package com.mlrinternational.barrierplan.ui.landing;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import com.mlrinternational.barrierplan.data.BarrierType;
 import com.mlrinternational.barrierplan.data.Metric;
@@ -8,9 +7,12 @@ import com.mlrinternational.barrierplan.ui.base.BasePresenter;
 import com.mlrinternational.barrierplan.utils.NavigationFactory;
 import com.mlrinternational.barrierplan.utils.UnitUtils;
 
-import static com.mlrinternational.barrierplan.utils.NavigationFactory.*;
+import static com.mlrinternational.barrierplan.utils.NavigationFactory.NavigationItem;
 
 public class LandingPresenter extends BasePresenter<LandingView> {
+
+  public static final String IMPERIAL_STRING = "\"";
+  public static final String METRIC_STRING = "cm";
 
   private final NavigationFactory navigationFactory = new NavigationFactory();
   private Metric currentMetric = Metric.IMPERIAL;
@@ -36,28 +38,21 @@ public class LandingPresenter extends BasePresenter<LandingView> {
         break;
     }
     final Double barriers = Math.floor(lengthNeeded / barrierLength);
-    final Double remainder = lengthNeeded - (barriers * barrierLength);
+    Double remainder = (lengthNeeded - (barriers * barrierLength));
+    if (currentMetric == Metric.METRIC) {
+      remainder = Math.ceil(remainder);
+    }
     return Pair.create(barriers.intValue(), remainder);
   }
 
   public String getMetricString() {
     switch (currentMetric) {
       case IMPERIAL:
-        return "\"";
+        return IMPERIAL_STRING;
       case METRIC:
-        return "cm";
+        return METRIC_STRING;
       default:
-        return "\"";
-    }
-  }
-
-  public void onUnitsChanged() {
-    switch (currentMetric) {
-      case IMPERIAL:
-        currentMetric = Metric.METRIC;
-        break;
-      case METRIC:
-        currentMetric = Metric.IMPERIAL;
+        return IMPERIAL_STRING;
     }
   }
 
@@ -70,9 +65,18 @@ public class LandingPresenter extends BasePresenter<LandingView> {
         view.showEvents();
         break;
       case PRODUCTS:
-        view.showProductS();
+        view.showProducts();
         break;
     }
+  }
 
+  public void onUnitsChanged() {
+    switch (currentMetric) {
+      case IMPERIAL:
+        currentMetric = Metric.METRIC;
+        break;
+      case METRIC:
+        currentMetric = Metric.IMPERIAL;
+    }
   }
 }
