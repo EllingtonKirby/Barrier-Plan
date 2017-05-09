@@ -12,4 +12,8 @@
   <string name="barriers">Barriers</string>
   <string name="remainder">Remainder</string>
   <string name="add_barrier_type">Add a Barrier Type</string>
+  <string name="barrier_plan">Barrier Plan</string>
+  <string name="metric">Units</string>
+  <string name="choose_units">Choose the units</string>
+  <string name="meters">Meters</string>
 </resources>

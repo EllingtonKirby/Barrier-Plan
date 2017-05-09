@@ -13,7 +13,7 @@ import static com.mlrinternational.barrierplan.utils.NavigationFactory.*;
 public class LandingPresenter extends BasePresenter<LandingView> {
 
   private final NavigationFactory navigationFactory = new NavigationFactory();
-  private final Metric currentMetric = Metric.IMPERIAL;
+  private Metric currentMetric = Metric.IMPERIAL;
 
   @Override public void onDestroy() {
 
@@ -48,6 +48,16 @@ public class LandingPresenter extends BasePresenter<LandingView> {
         return "cm";
       default:
         return "\"";
+    }
+  }
+
+  public void onUnitsChanged() {
+    switch (currentMetric) {
+      case IMPERIAL:
+        currentMetric = Metric.METRIC;
+        break;
+      case METRIC:
+        currentMetric = Metric.IMPERIAL;
     }
   }
 
