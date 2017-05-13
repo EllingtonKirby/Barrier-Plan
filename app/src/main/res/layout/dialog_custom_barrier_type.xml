@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:paddingBottom="@dimen/spacing_8dp"
+      android:paddingTop="@dimen/spacing_8dp"
+      android:text="@string/custom_barrier_type"
+      android:textSize="@dimen/text_size_20sp"
+      />
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      >
+
+    <EditText
+        android:id="@+id/entry_name"
+        android:layout_width="@dimen/spacing_100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/spacing_40dp"
+        android:hint="@string/name"
+        />
+
+    <EditText
+        android:id="@+id/entry_length"
+        android:layout_width="@dimen/spacing_100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/spacing_40dp"
+        android:hint="@string/length"
+        android:inputType="number"
+        />
+
+  </FrameLayout>
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/spacing_8dp"
+      android:paddingBottom="@dimen/spacing_8dp"
+      >
+    <TextView
+        android:id="@+id/btn_add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@android:string/ok"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@android:string/cancel"
+        android:gravity="center"
+        />
+
+  </LinearLayout>
+
+</LinearLayout>

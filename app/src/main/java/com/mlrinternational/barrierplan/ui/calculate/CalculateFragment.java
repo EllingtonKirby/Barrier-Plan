@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,12 +16,14 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierType;
 import com.mlrinternational.barrierplan.ui.base.BaseBarrierPlanFragment;
+import com.mlrinternational.barrierplan.utils.AddBarrierTypeDialogUtil;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.Subject;
 
 import static com.mlrinternational.barrierplan.ui.landing.LandingPresenter.IMPERIAL_STRING;
 
-public class CalculateFragment extends BaseBarrierPlanFragment {
+public class CalculateFragment extends BaseBarrierPlanFragment
+    implements AddBarrierTypeDialogListener, CustomBarrierTypeDialogListener {
 
   @BindView(R.id.single_barrier_container) CardView singleBarrierContainer;
   @BindView(R.id.multi_barrier_container) CardView multiBarrierContainer;
@@ -32,11 +36,15 @@ public class CalculateFragment extends BaseBarrierPlanFragment {
   @BindView(R.id.unit) TextView unit;
 
   private BarrierType currentSingleType = BarrierType.MOVIT;
+  private AddBarrierTypeDialogUtil dialogUtil;
+  private AlertDialog addBarrierTypeDialog;
+  private AlertDialog customBarrierTypeDialog;
   private Subject<String> metricChanged;
   private Disposable singleCalcEditTextDisposable;
   private Disposable btnMinitDisposable;
   private Disposable btnMovitDisposable;
   private Disposable metricChangedDisposable;
+  private Disposable btnAddBarrierTypeDisposable;
 
   public static CalculateFragment getInstance() {
     return new CalculateFragment();
@@ -49,6 +57,9 @@ public class CalculateFragment extends BaseBarrierPlanFragment {
   @Override public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     metricChanged = listener.getMetricChangedObservable();
+    dialogUtil = new AddBarrierTypeDialogUtil(getContext(), LayoutInflater.from(getActivity()));
+    addBarrierTypeDialog = dialogUtil.getAddBarrierTypeDialog(this);
+    customBarrierTypeDialog = dialogUtil.getCustomBarrierTypeDialog(this);
   }
 
   @Override public void onResume() {
@@ -67,6 +78,22 @@ public class CalculateFragment extends BaseBarrierPlanFragment {
     singleCalcEditTextDisposable = null;
     btnMinitDisposable = null;
     btnMovit = null;
+  }
+
+  @Override public void showAddCustomDialog() {
+    customBarrierTypeDialog.show();
+  }
+
+  @Override public void addMinit() {
+
+  }
+
+  @Override public void addMovit() {
+
+  }
+
+  @Override public void addCustomBarrierType(final String name, final String length) {
+
   }
 
   private void changeSingleCalcBarrierType() {
@@ -119,6 +146,9 @@ public class CalculateFragment extends BaseBarrierPlanFragment {
         .subscribe(
             o -> changeSingleCalcBarrierType()
         );
+
+    btnAddBarrierTypeDisposable = RxView.clicks(btnAddBarrierType)
+        .subscribe(o -> addBarrierTypeDialog.show());
 
     metricChangedDisposable = metricChanged.subscribe(this::onMetricChanged);
   }
