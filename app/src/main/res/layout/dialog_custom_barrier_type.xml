@@ -35,11 +35,20 @@
         android:layout_width="@dimen/spacing_100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="@dimen/spacing_40dp"
+        android:layout_marginEnd="@dimen/spacing_60dp"
         android:hint="@string/length"
         android:inputType="number"
         />
 
+    <TextView
+        android:id="@+id/unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center"
+        android:layout_marginEnd="@dimen/spacing_40dp"
+        android:gravity="center"
+        android:text="@string/feet"
+        />
   </FrameLayout>
 
 
@@ -47,24 +56,24 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:paddingTop="@dimen/spacing_8dp"
       android:paddingBottom="@dimen/spacing_8dp"
+      android:paddingTop="@dimen/spacing_8dp"
       >
     <TextView
         android:id="@+id/btn_add"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@android:string/ok"
         android:gravity="center"
+        android:text="@android:string/ok"
         />
     <TextView
         android:id="@+id/btn_cancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@android:string/cancel"
         android:gravity="center"
+        android:text="@android:string/cancel"
         />
 
   </LinearLayout>

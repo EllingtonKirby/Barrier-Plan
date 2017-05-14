@@ -21,4 +21,6 @@
   <string name="length">Length</string>
   <string name="name">Name</string>
   <string name="custom">Custom</string>
+  <string name="total_length">Total Length</string>
+  <string name="total_barriers">Barriers</string>
 </resources>

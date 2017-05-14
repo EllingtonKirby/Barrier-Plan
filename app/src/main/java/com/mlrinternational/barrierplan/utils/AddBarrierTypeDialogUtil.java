@@ -5,14 +5,11 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.ui.calculate.AddBarrierTypeDialogListener;
 import com.mlrinternational.barrierplan.ui.calculate.CustomBarrierTypeDialogListener;
-
-/**
- * Created by ellington on 5/13/17.
- */
 
 public class AddBarrierTypeDialogUtil {
 
@@ -50,11 +47,15 @@ public class AddBarrierTypeDialogUtil {
     return dialog;
   }
 
-  public AlertDialog getCustomBarrierTypeDialog(final CustomBarrierTypeDialogListener listener) {
+  public AlertDialog getCustomBarrierTypeDialog(
+      final CustomBarrierTypeDialogListener listener,
+      final String metric) {
     final View view = inflater.inflate(R.layout.dialog_custom_barrier_type, null);
     final AlertDialog dialog = new AlertDialog.Builder(context).setView(view).create();
     final EditText name = ButterKnife.findById(view, R.id.entry_name);
     final EditText length = ButterKnife.findById(view, R.id.entry_length);
+    final TextView unit = ButterKnife.findById(view, R.id.unit);
+    unit.setText(metric);
     final View add = ButterKnife.findById(view, R.id.btn_add);
     add.setOnClickListener(
         v -> {

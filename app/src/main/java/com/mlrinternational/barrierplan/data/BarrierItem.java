@@ -8,4 +8,6 @@ public interface BarrierItem {
   double getLengthImperial();
 
   double getLengthMetric();
+
+  String getType();
 }

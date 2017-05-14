@@ -22,4 +22,8 @@ public enum  BarrierType implements BarrierItem {
   public double getLengthMetric() {
     return lengthMetric;
   }
+
+  @Override public String getType() {
+    return type;
+  }
 }

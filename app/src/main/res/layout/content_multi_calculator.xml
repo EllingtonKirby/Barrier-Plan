@@ -36,16 +36,16 @@
         android:paddingTop="@dimen/spacing_4dp"
         android:text="@string/add_barrier_type"
         />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <LinearLayout
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true"
         />
 
     <include
-        layout="@layout/content_calculator_result"
-        android:id="@+id/multi_barrier_result"
-        android:visibility="gone"
+        layout="@layout/item_multi_calc_result"
         />
   </LinearLayout>
 </android.support.v7.widget.CardView>
