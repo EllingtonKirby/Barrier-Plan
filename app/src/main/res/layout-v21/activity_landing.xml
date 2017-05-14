@@ -36,13 +36,13 @@
             android:id="@+id/btn_metric"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/spacing_16dp"
+            android:paddingStart="@dimen/spacing_16dp"
             android:text="@string/metric"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_size_18sp"
-            android:paddingEnd="@dimen/spacing_16dp"
-            android:paddingStart="@dimen/spacing_16dp"
             />
       </RelativeLayout>
     </android.support.v7.widget.Toolbar>
@@ -50,7 +50,6 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_16dp"
         />
   </LinearLayout>
 

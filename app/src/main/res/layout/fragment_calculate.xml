@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
     >
-  <include layout="@layout/content_single_calculator"/>
-  <include layout="@layout/content_multi_calculator"/>
-</LinearLayout>
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:orientation="vertical"
+      >
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/spacing_16dp"
+        />
+    <include layout="@layout/content_single_calculator"/>
+    <include layout="@layout/content_multi_calculator"/>
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_56dp"
+        />
+  </LinearLayout>
+</ScrollView>

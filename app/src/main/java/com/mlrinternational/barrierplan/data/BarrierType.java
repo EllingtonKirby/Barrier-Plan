@@ -1,6 +1,6 @@
 package com.mlrinternational.barrierplan.data;
 
-public enum  BarrierType {
+public enum  BarrierType implements BarrierItem {
 
   MOVIT("movit",  191.77, 75.5),
   MINIT("minit",  118.11, 46.5);
@@ -21,5 +21,9 @@ public enum  BarrierType {
 
   public double getLengthMetric() {
     return lengthMetric;
+  }
+
+  @Override public String getType() {
+    return type;
   }
 }

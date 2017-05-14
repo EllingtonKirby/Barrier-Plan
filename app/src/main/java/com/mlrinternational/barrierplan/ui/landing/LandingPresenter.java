@@ -1,6 +1,7 @@
 package com.mlrinternational.barrierplan.ui.landing;
 
 import android.support.v4.util.Pair;
+import com.mlrinternational.barrierplan.data.BarrierItem;
 import com.mlrinternational.barrierplan.data.BarrierType;
 import com.mlrinternational.barrierplan.data.Metric;
 import com.mlrinternational.barrierplan.ui.base.BasePresenter;
@@ -23,7 +24,7 @@ public class LandingPresenter extends BasePresenter<LandingView> {
 
   public Pair<Integer, Double> getCalculation(
       final Double input,
-      final BarrierType currentSingleType) {
+      final BarrierItem currentSingleType) {
     final double barrierLength;
     final double lengthNeeded = UnitUtils.convertDown(input, currentMetric);
     switch (currentMetric) {

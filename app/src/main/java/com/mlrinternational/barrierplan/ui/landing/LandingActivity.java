@@ -15,6 +15,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.mlrinternational.barrierplan.R;
+import com.mlrinternational.barrierplan.data.BarrierItem;
 import com.mlrinternational.barrierplan.data.BarrierType;
 import com.mlrinternational.barrierplan.ui.base.BarrierPlanFragmentListener;
 import com.mlrinternational.barrierplan.ui.base.BaseActivity;
@@ -64,7 +65,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
   }
 
   @Override public Pair<Integer, Double> getCalculation(
-      final Double lengthNeeded, final BarrierType currentSingleType) {
+      final Double lengthNeeded, final BarrierItem currentSingleType) {
     return presenter.getCalculation(lengthNeeded, currentSingleType);
   }
 

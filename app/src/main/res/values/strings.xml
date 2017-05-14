@@ -16,4 +16,11 @@
   <string name="metric">Units</string>
   <string name="choose_units">Choose the units</string>
   <string name="meters">meters</string>
+  <string name="select_barrier_type">Select Barrier Type</string>
+  <string name="custom_barrier_type">Custom Barrier Type</string>
+  <string name="length">Length</string>
+  <string name="name">Name</string>
+  <string name="custom">Custom</string>
+  <string name="total_length">Total Length</string>
+  <string name="total_barriers">Barriers</string>
 </resources>
