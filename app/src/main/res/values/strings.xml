@@ -23,4 +23,10 @@
   <string name="custom">Custom</string>
   <string name="total_length">Total Length</string>
   <string name="total_barriers">Barriers</string>
+  <string name="Length">Length:</string>
+  <string name="height">Height:</string>
+  <string name="weight">Weight</string>
+  <string name="load">Accepted Load:</string>
+  <string name="resistance">Thermal Resistance:</string>
+  <string name="handling">Shipping and Handling:</string>
 </resources>

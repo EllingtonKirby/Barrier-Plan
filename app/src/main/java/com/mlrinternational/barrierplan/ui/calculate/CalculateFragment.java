@@ -85,8 +85,8 @@ public class CalculateFragment extends BaseBarrierPlanFragment
         dialogUtil.getCustomBarrierTypeDialog(this, "feet");
   }
 
-  @Override public void onResume() {
-    super.onResume();
+  @Override public void onStart() {
+    super.onStart();
     observeViews();
   }
 

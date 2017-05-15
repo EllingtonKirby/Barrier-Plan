@@ -57,7 +57,7 @@ public class LandingPresenter extends BasePresenter<LandingView> {
     }
   }
 
-  public void onNavigationItemSelected(final NavigationItem navigationItem) {
+  public boolean onNavigationItemSelected(final NavigationItem navigationItem) {
     switch (navigationItem) {
       case CALCULATE:
         view.showCalculate();
@@ -69,6 +69,7 @@ public class LandingPresenter extends BasePresenter<LandingView> {
         view.showProducts();
         break;
     }
+    return true;
   }
 
   public void onUnitsChanged() {
