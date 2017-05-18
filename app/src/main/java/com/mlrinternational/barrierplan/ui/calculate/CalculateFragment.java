@@ -1,24 +1,20 @@
 package com.mlrinternational.barrierplan.ui.calculate;
 
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierItem;
 import com.mlrinternational.barrierplan.data.BarrierType;
@@ -36,7 +32,8 @@ import static com.mlrinternational.barrierplan.ui.landing.LandingPresenter.IMPER
 import static com.mlrinternational.barrierplan.ui.landing.LandingPresenter.METRIC_STRING;
 
 public class CalculateFragment extends BaseBarrierPlanFragment
-    implements AddBarrierTypeDialogListener, CustomBarrierTypeDialogListener {
+    implements AddBarrierTypeDialogListener, CustomBarrierTypeDialogListener,
+    MultipleBarrierCalcListener {
 
   private static final String format = "%s %s";
   private final Map<String, Pair<BarrierItem, Integer>> multiCalcData = new HashMap<>();
@@ -49,7 +46,7 @@ public class CalculateFragment extends BaseBarrierPlanFragment
   @BindView(R.id.single_barrier_result) View singleBarrierResult;
   @BindView(R.id.text_entry_length_needed) EditText singleCalcEditText;
   @BindView(R.id.unit) TextView unit;
-  @BindView(R.id.list) LinearLayout list;
+  @BindView(R.id.list) RecyclerView list;
   @BindView(R.id.length_total) TextView totalLengthView;
   @BindView(R.id.barriers_total) TextView totalBarriersView;
 
@@ -66,6 +63,7 @@ public class CalculateFragment extends BaseBarrierPlanFragment
   private Disposable btnAddBarrierTypeDisposable;
   private Metric currentMetric = Metric.IMPERIAL;
   private String metricString = "feet";
+  private MultipleBarrierTypeAdapter adapter;
 
   public static CalculateFragment getInstance() {
     return new CalculateFragment();
@@ -75,11 +73,22 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     return R.layout.fragment_calculate;
   }
 
+  @Override public void onCreate(@Nullable final Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    inflater = LayoutInflater.from(getContext());
+    dialogUtil = new AddBarrierTypeDialogUtil(getContext(), inflater);
+    adapter = new MultipleBarrierTypeAdapter(getActivity(), this, listener);
+  }
+
+  @Override public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    list.setLayoutManager(new LinearLayoutManager(getContext()));
+    list.setAdapter(adapter);
+  }
+
   @Override public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    inflater = LayoutInflater.from(getContext());
     metricChanged = listener.getMetricChangedObservable();
-    dialogUtil = new AddBarrierTypeDialogUtil(getContext(), inflater);
     addBarrierTypeDialog = dialogUtil.getAddBarrierTypeDialog(this);
     customBarrierTypeDialog =
         dialogUtil.getCustomBarrierTypeDialog(this, "feet");
@@ -115,45 +124,42 @@ public class CalculateFragment extends BaseBarrierPlanFragment
         listener.getMetricString().equals(METRIC_STRING) ? Metric.METRIC : Metric.IMPERIAL
     );
     multiCalcData.put(customBarrier.getType(), Pair.create(customBarrier, 0));
-    final View customView = inflater.inflate(R.layout.item_mult_barrier_calculation, null);
-    final TextInputEditText editText = ButterKnife.findById(customView, R.id.entry_length);
-    final TextView textType = ButterKnife.findById(customView, R.id.title);
-    textType.setText(customBarrier.getType());
-    final TextView barrierTotal = ButterKnife.findById(customView, R.id.barrier_total);
-    list.addView(customView);
-    RxTextView
-        .textChanges(editText)
-        .filter(charSequence -> charSequence.length() > 0)
-        .subscribe(
-            charSequence -> {
-              final Double value = Double.valueOf(charSequence.toString());
-              final String barrier = value == 1 ? "Barrier" : "Barriers";
-              final int numBarriers = listener.getCalculation(value, customBarrier).first;
-              final String result = String.format(
-                  format,
-                  numBarriers,
-                  barrier
-              );
-              if (multiCalcData.containsKey(customBarrier.getType())) {
-                multiCalcData.remove(customBarrier.getType());
-              }
-              multiCalcData.put(customBarrier.getType(), Pair.create(customBarrier, numBarriers));
-              barrierTotal.setText(result);
-              updateTotals();
-            }
-        );
+    adapter.addItem(customBarrier);
   }
 
   @Override public void addMinit() {
-    setUpMultiView(R.drawable.minit_logo, BarrierType.MINIT);
+    setUpMultiView(BarrierType.MINIT);
   }
 
   @Override public void addMovit() {
-    setUpMultiView(R.drawable.movit_logo, BarrierType.MOVIT);
+    setUpMultiView(BarrierType.MOVIT);
   }
 
   @Override public void showAddCustomDialog() {
     customBarrierTypeDialog.show();
+  }
+
+  public void updateTotals(final BarrierItem item, final int numBarriers) {
+    if (item != null) {
+      if (multiCalcData.containsKey(item.getType())) {
+        multiCalcData.remove(item.getType());
+      }
+      multiCalcData.put(item.getType(), Pair.create(item, numBarriers));
+    }
+    Double totalLength = 0d;
+    int totalBarriers = 0;
+    for (Pair<BarrierItem, Integer> pair : multiCalcData.values()) {
+      if (currentMetric == Metric.IMPERIAL) {
+        totalLength += pair.second * pair.first.getLengthImperial();
+      } else {
+        totalLength += pair.second * pair.first.getLengthMetric();
+      }
+      totalBarriers += pair.second;
+    }
+    totalLength = UnitUtils.convertUp(totalLength, currentMetric);
+    final String totalLengthString = String.format(format, totalLength, metricString);
+    totalLengthView.setText(totalLengthString);
+    totalBarriersView.setText(String.valueOf(totalBarriers));
   }
 
   private void changeSingleCalcBarrierType() {
@@ -222,60 +228,14 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     customBarrierTypeDialog = null;
     customBarrierTypeDialog =
         dialogUtil.getCustomBarrierTypeDialog(this, metricString);
-    updateTotals();
+    updateTotals(null, 0);
   }
 
-  private void setUpMultiView(final @DrawableRes int logo, final BarrierItem barrierItem) {
+  private void setUpMultiView(final BarrierItem barrierItem) {
     if (multiCalcData.containsKey(barrierItem.getType())) {
       return;
     }
     multiCalcData.put(barrierItem.getType(), Pair.create(barrierItem, 0));
-    final View minitView = inflater.inflate(R.layout.item_mult_barrier_calculation, null);
-    final TextInputEditText editText = ButterKnife.findById(minitView, R.id.entry_length);
-    final ImageView imgType = ButterKnife.findById(minitView, R.id.img_type);
-    final TextView textType = ButterKnife.findById(minitView, R.id.title);
-    textType.setVisibility(View.GONE);
-    imgType.setVisibility(View.VISIBLE);
-    imgType.setImageDrawable(getResources().getDrawable(logo));
-    final TextView barrierTotal = ButterKnife.findById(minitView, R.id.barrier_total);
-    list.addView(minitView);
-    RxTextView
-        .textChanges(editText)
-        .filter(charSequence -> charSequence.length() > 0)
-        .subscribe(
-            charSequence -> {
-              final Double value = Double.valueOf(charSequence.toString());
-              final String barrier = value == 1 ? "Barrier" : "Barriers";
-              final int numBarriers = listener.getCalculation(value, barrierItem).first;
-              final String result = String.format(
-                  format,
-                  numBarriers,
-                  barrier
-              );
-              if (multiCalcData.containsKey(barrierItem.getType())) {
-                multiCalcData.remove(barrierItem.getType());
-              }
-              multiCalcData.put(barrierItem.getType(), Pair.create(barrierItem, numBarriers));
-              barrierTotal.setText(result);
-              updateTotals();
-            }
-        );
-  }
-
-  private void updateTotals() {
-    Double totalLength = 0d;
-    int totalBarriers = 0;
-    for (Pair<BarrierItem, Integer> pair : multiCalcData.values()) {
-      if (currentMetric == Metric.IMPERIAL) {
-        totalLength += pair.second * pair.first.getLengthImperial();
-      } else {
-        totalLength += pair.second * pair.first.getLengthMetric();
-      }
-      totalBarriers += pair.second;
-    }
-    totalLength = UnitUtils.convertUp(totalLength, currentMetric);
-    final String totalLengthString = String.format(format, totalLength, metricString);
-    totalLengthView.setText(totalLengthString);
-    totalBarriersView.setText(String.valueOf(totalBarriers));
+    adapter.addItem(barrierItem);
   }
 }

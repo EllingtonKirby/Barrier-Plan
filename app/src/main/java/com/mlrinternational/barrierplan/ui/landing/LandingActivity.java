@@ -17,10 +17,10 @@ import butterknife.BindView;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierItem;
-import com.mlrinternational.barrierplan.ui.products.ProductsFragment;
 import com.mlrinternational.barrierplan.ui.base.BarrierPlanFragmentListener;
 import com.mlrinternational.barrierplan.ui.base.BaseActivity;
 import com.mlrinternational.barrierplan.ui.calculate.CalculateFragment;
+import com.mlrinternational.barrierplan.ui.products.ProductsFragment;
 import com.mlrinternational.barrierplan.utils.NavigationFactory;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -121,7 +121,10 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
   }
 
   private void replaceFragment(final Fragment fragment) {
-    fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+    fragmentManager
+        .beginTransaction()
+        .replace(R.id.container, fragment)
+        .commit();
   }
 
   private void setUpUnitsDialog() {

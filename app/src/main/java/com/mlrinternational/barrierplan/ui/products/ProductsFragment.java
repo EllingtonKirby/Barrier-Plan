@@ -51,13 +51,13 @@ public class ProductsFragment extends BaseBarrierPlanFragment {
   @Override public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     adapter = new ProductsImageGalleryPagerAdapter(getContext());
-    pager.setAdapter(adapter);
+    //pager.setAdapter(adapter);
   }
 
   @Override public void onStart() {
     super.onStart();
     observeViews();
-    changeDisplayedBarrierType();
+    //changeDisplayedBarrierType();
   }
 
   private void changeDisplayedBarrierType() {
