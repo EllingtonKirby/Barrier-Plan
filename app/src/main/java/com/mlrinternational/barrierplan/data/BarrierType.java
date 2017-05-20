@@ -1,18 +1,27 @@
 package com.mlrinternational.barrierplan.data;
 
-public enum  BarrierType implements BarrierItem {
+import android.support.annotation.DrawableRes;
+import com.mlrinternational.barrierplan.R;
 
-  MOVIT("movit",  191.77, 75.5),
-  MINIT("minit",  118.11, 46.5);
+public enum BarrierType implements BarrierItem {
+
+  MOVIT("movit", 191.77, 75.5, R.drawable.movit_logo),
+  MINIT("minit", 118.11, 46.5, R.drawable.minit_logo);
 
   private String type;
   private double lengthMetric;
   private double lengthImperial;
+  private @DrawableRes int logo;
 
-  BarrierType(final String type, final double lengthMetric, final double lengthImperial) {
+  BarrierType(
+      final String type,
+      final double lengthMetric,
+      final double lengthImperial,
+      final @DrawableRes int logo) {
     this.type = type;
     this.lengthMetric = lengthMetric;
     this.lengthImperial = lengthImperial;
+    this.logo = logo;
   }
 
   public double getLengthImperial() {
@@ -25,5 +34,9 @@ public enum  BarrierType implements BarrierItem {
 
   @Override public String getType() {
     return type;
+  }
+
+  public int getLogo() {
+    return logo;
   }
 }

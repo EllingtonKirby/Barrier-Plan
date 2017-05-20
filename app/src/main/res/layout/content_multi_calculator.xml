@@ -8,11 +8,13 @@
     android:layout_marginLeft="@dimen/spacing_4dp"
     android:layout_marginRight="@dimen/spacing_4dp"
     android:background="@drawable/card_background"
+    android:animateLayoutChanges="true"
     app:cardCornerRadius="@dimen/cardview_default_radius"
     >
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:animateLayoutChanges="true"
       android:orientation="vertical"
       >
     <TextView
@@ -36,12 +38,10 @@
         android:paddingTop="@dimen/spacing_4dp"
         android:text="@string/add_barrier_type"
         />
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true"
         />
 
     <include
