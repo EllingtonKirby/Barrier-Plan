@@ -16,6 +16,7 @@ import com.mlrinternational.barrierplan.data.BarrierItem;
 import com.mlrinternational.barrierplan.data.BarrierType;
 import com.mlrinternational.barrierplan.data.CustomBarrier;
 import com.mlrinternational.barrierplan.ui.base.BarrierPlanFragmentListener;
+import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class MultipleBarrierTypeAdapter
       holder.textType.setText(item.getType());
     }
 
-    RxTextView
+    holder.textObserver = RxTextView
         .textChanges(holder.editText)
         .filter(charSequence -> charSequence.length() > 0)
         .subscribe(
@@ -73,6 +74,11 @@ public class MultipleBarrierTypeAdapter
               listener.updateTotals(item, numBarriers);
             }
         );
+  }
+
+  @Override public void onViewDetachedFromWindow(final BarrierTypeViewHolder holder) {
+    super.onViewDetachedFromWindow(holder);
+    holder.textObserver.dispose();
   }
 
   @Override public BarrierTypeViewHolder onCreateViewHolder(
@@ -96,6 +102,7 @@ public class MultipleBarrierTypeAdapter
     @BindView(R.id.img_type) ImageView imgType;
     @BindView(R.id.title) TextView textType;
     @BindView(R.id.barrier_total) TextView barrierTotal;
+    private Disposable textObserver;
 
     public BarrierTypeViewHolder(final View itemView) {
       super(itemView);

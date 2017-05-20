@@ -47,5 +47,6 @@ public class ProductsImageGalleryPagerAdapter extends PagerAdapter {
 
   public void setResources(final int[] resources) {
     this.resources = resources;
+    notifyDataSetChanged();
   }
 }

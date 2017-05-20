@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -37,8 +38,10 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
   @BindView(R.id.container) FrameLayout container;
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.btn_metric) TextView btnMetric;
+  @BindView(R.id.btn_contact) TextView btnContact;
 
   private AlertDialog unitsPicker;
+  private AlertDialog contactDialog;
   private FragmentManager fragmentManager;
   private CalculateFragment calculateFragment;
   private ProductsFragment productsFragment;
@@ -55,6 +58,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
     super.onCreate(savedInstanceState);
     fragmentManager = getSupportFragmentManager();
     setUpUnitsDialog();
+    setUpContactDialog();
     //Default
     showCalculate();
     bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
@@ -91,8 +95,18 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
     replaceFragment(getCalculateFragmentInstance());
   }
 
+  @Override public void showContactToolbar() {
+    btnMetric.setVisibility(View.GONE);
+    btnContact.setVisibility(View.VISIBLE);
+  }
+
   @Override public void showEvents() {
 
+  }
+
+  @Override public void showMetricToolbar() {
+    btnMetric.setVisibility(View.VISIBLE);
+    btnContact.setVisibility(View.GONE);
   }
 
   @Override public void showProducts() {
@@ -118,6 +132,11 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
         .subscribe(
             o -> unitsPicker.show()
         );
+
+    RxView.clicks(btnContact)
+        .subscribe(
+            o -> contactDialog.show()
+        );
   }
 
   private void replaceFragment(final Fragment fragment) {
@@ -125,6 +144,13 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
         .beginTransaction()
         .replace(R.id.container, fragment)
         .commit();
+  }
+
+  private void setUpContactDialog() {
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    final View view = View.inflate(this, R.layout.dialog_contact, null);
+    builder.setView(view);
+    contactDialog = builder.create();
   }
 
   private void setUpUnitsDialog() {

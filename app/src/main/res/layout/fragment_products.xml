@@ -56,8 +56,9 @@
 
   <android.support.v4.view.ViewPager
       android:id="@+id/pager"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_width="400dp"
+      android:layout_height="200dp"
+      android:layout_gravity="center"
       />
 
 
@@ -65,7 +66,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/spacing_4dp"
-      android:background="@drawable/card_background"
+      app:cardBackgroundColor="@color/light_gray"
       app:cardCornerRadius="@dimen/cardview_default_radius"
       >
     <LinearLayout
@@ -86,7 +87,7 @@
           android:layout_height="wrap_content"
           android:layout_margin="@dimen/spacing_4dp"
           >
-        <TableRow>
+        <TableRow android:layout_marginBottom="@dimen/spacing_4dp">
           <TextView
               android:text="@string/Length"
               android:textStyle="bold"
@@ -98,7 +99,7 @@
               android:layout_marginLeft="@dimen/text_size_2sp"
               />
         </TableRow>
-        <TableRow>
+        <TableRow android:layout_marginBottom="@dimen/spacing_4dp">
           <TextView
               android:text="@string/height"
               android:textStyle="bold"
@@ -110,7 +111,7 @@
               android:layout_marginLeft="@dimen/text_size_2sp"
               />
         </TableRow>
-        <TableRow>
+        <TableRow android:layout_marginBottom="@dimen/spacing_4dp">
           <TextView
               android:text="@string/weight"
               android:textStyle="bold"
@@ -122,7 +123,7 @@
               android:layout_marginLeft="@dimen/text_size_2sp"
               />
         </TableRow>
-        <TableRow>
+        <TableRow android:layout_marginBottom="@dimen/spacing_4dp">
           <TextView
               android:text="@string/load"
               android:textStyle="bold"
@@ -134,7 +135,7 @@
               android:layout_marginLeft="@dimen/text_size_2sp"
               />
         </TableRow>
-        <TableRow>
+        <TableRow android:layout_marginBottom="@dimen/spacing_4dp">
           <TextView
               android:text="@string/resistance"
               android:textStyle="bold"
@@ -146,7 +147,7 @@
               android:layout_marginLeft="@dimen/text_size_2sp"
               />
         </TableRow>
-        <TableRow>
+        <TableRow android:layout_marginBottom="@dimen/spacing_4dp">
           <TextView
               android:text="@string/handling"
               android:textStyle="bold"
@@ -157,6 +158,56 @@
               android:layout_height="wrap_content"
               android:layout_marginLeft="@dimen/text_size_2sp"
               />
+        </TableRow>
+        <TableRow android:layout_marginBottom="@dimen/spacing_4dp">
+          <TextView
+              android:text="@string/available_colors"
+              android:textStyle="bold"
+              />
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/text_size_2sp"
+              >
+            <View
+                android:layout_width="@dimen/spacing_16dp"
+                android:layout_height="@dimen/spacing_16dp"
+                android:layout_gravity="center"
+                android:background="@android:color/holo_red_light"
+                />
+            <View
+                android:layout_width="@dimen/spacing_16dp"
+                android:layout_height="@dimen/spacing_16dp"
+                android:layout_gravity="center"
+                android:background="@color/colorWhite"
+                />
+            <View
+                android:layout_width="@dimen/spacing_16dp"
+                android:layout_height="@dimen/spacing_16dp"
+                android:layout_gravity="center"
+                android:background="@color/yellow"
+                />
+            <View
+                android:layout_width="@dimen/spacing_16dp"
+                android:layout_height="@dimen/spacing_16dp"
+                android:layout_gravity="center"
+                android:background="@color/green"
+                />
+            <View
+                android:layout_width="@dimen/spacing_16dp"
+                android:layout_height="@dimen/spacing_16dp"
+                android:layout_gravity="center"
+                android:background="@color/blue"
+                />
+            <View
+                android:layout_width="@dimen/spacing_16dp"
+                android:layout_height="@dimen/spacing_16dp"
+                android:layout_gravity="center"
+                android:background="@color/orange"
+                />
+
+          </LinearLayout>
+
         </TableRow>
       </TableLayout>
     </LinearLayout>

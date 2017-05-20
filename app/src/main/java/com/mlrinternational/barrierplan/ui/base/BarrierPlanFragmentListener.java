@@ -12,4 +12,8 @@ public interface BarrierPlanFragmentListener {
   String getMetricString();
 
   Subject<String> getMetricChangedObservable();
+
+  void showContactToolbar();
+
+  void showMetricToolbar();
 }
