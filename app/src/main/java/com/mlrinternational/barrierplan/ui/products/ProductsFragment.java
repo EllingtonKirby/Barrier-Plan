@@ -59,7 +59,6 @@ public class ProductsFragment extends BaseBarrierPlanFragment {
     super.onCreate(savedInstanceState);
     movitAdapter = new ProductsImageGalleryPagerAdapter(getContext());
     minitAdapter = new ProductsImageGalleryPagerAdapter(getContext());
-    listener.showContactToolbar();
   }
 
   @Override public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class ProductsFragment extends BaseBarrierPlanFragment {
   @Override public void onStart() {
     super.onStart();
     observeViews();
-
+    listener.showContactToolbar();
     changeDisplayedBarrierType();
   }
 

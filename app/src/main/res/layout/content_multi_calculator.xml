@@ -7,8 +7,8 @@
     android:layout_marginBottom="@dimen/spacing_16dp"
     android:layout_marginLeft="@dimen/spacing_4dp"
     android:layout_marginRight="@dimen/spacing_4dp"
-    android:background="@drawable/card_background"
     android:animateLayoutChanges="true"
+    android:background="@drawable/card_background"
     app:cardCornerRadius="@dimen/cardview_default_radius"
     >
   <LinearLayout
@@ -18,9 +18,11 @@
       android:orientation="vertical"
       >
     <TextView
+        android:id="@+id/multi_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:drawableRight="@drawable/ic_save_white_24dp"
         android:gravity="center"
         android:text="@string/multi_barrier_calculator"
         android:textColor="@color/colorWhite"

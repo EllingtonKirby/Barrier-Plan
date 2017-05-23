@@ -1,9 +1,14 @@
 package com.mlrinternational.barrierplan.data;
 
 import com.mlrinternational.barrierplan.utils.UnitUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CustomBarrier implements BarrierItem {
 
+  public static final String TYPE = "type";
+  public static final String LENGTH_IMPERIAL = "lengthImperial";
+  public static final String LENGTH_METRIC = "lengthMetric";
   private double lengthImperial;
   private double lengthMetric;
   private String name;
@@ -20,6 +25,14 @@ public class CustomBarrier implements BarrierItem {
       lengthImperial =
           UnitUtils.convertDown(UnitUtils.convertBetween(value, Metric.METRIC), Metric.IMPERIAL);
     }
+  }
+
+  @Override public String getJsonString() throws JSONException {
+    final JSONObject jsonObject = new JSONObject();
+    jsonObject.put(TYPE, name);
+    jsonObject.put(LENGTH_IMPERIAL, lengthImperial);
+    jsonObject.put(LENGTH_METRIC, lengthMetric);
+    return jsonObject.toString();
   }
 
   public double getLengthImperial() {

@@ -2,11 +2,15 @@ package com.mlrinternational.barrierplan.data;
 
 import android.support.annotation.DrawableRes;
 import com.mlrinternational.barrierplan.R;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.mlrinternational.barrierplan.data.CustomBarrier.TYPE;
 
 public enum BarrierType implements BarrierItem {
 
-  MOVIT("movit", 191.77, 75.5, R.drawable.movit_logo),
-  MINIT("minit", 118.11, 46.5, R.drawable.minit_logo);
+  MOVIT("MOVit", 191.77, 75.5, R.drawable.movit_logo),
+  MINIT("MINit", 118.11, 46.5, R.drawable.minit_logo);
 
   private String type;
   private double lengthMetric;
@@ -38,5 +42,11 @@ public enum BarrierType implements BarrierItem {
 
   public int getLogo() {
     return logo;
+  }
+
+  public String getJsonString() throws JSONException {
+    final JSONObject jsonObject = new JSONObject();
+    jsonObject.put(TYPE, type);
+    return jsonObject.toString();
   }
 }

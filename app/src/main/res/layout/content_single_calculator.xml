@@ -17,9 +17,11 @@
       android:orientation="vertical"
       >
     <TextView
+        android:id="@+id/single_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:drawableRight="@drawable/ic_save_white_24dp"
         android:gravity="center"
         android:paddingBottom="@dimen/spacing_8dp"
         android:text="@string/single_barrier_calculator"

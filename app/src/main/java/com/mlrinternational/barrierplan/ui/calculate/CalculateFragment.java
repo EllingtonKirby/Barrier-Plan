@@ -3,11 +3,11 @@ package com.mlrinternational.barrierplan.ui.calculate;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +25,11 @@ import com.mlrinternational.barrierplan.utils.AddBarrierTypeDialogUtil;
 import com.mlrinternational.barrierplan.utils.UnitUtils;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.Subject;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.mlrinternational.barrierplan.ui.landing.LandingPresenter.IMPERIAL_STRING;
@@ -33,13 +37,15 @@ import static com.mlrinternational.barrierplan.ui.landing.LandingPresenter.METRI
 
 public class CalculateFragment extends BaseBarrierPlanFragment
     implements AddBarrierTypeDialogListener, CustomBarrierTypeDialogListener,
-    MultipleBarrierCalcListener {
+    MultipleBarrierCalcListener, SaveEventDialogListener {
 
   private static final String format = "%s %s";
   private final Map<String, Pair<BarrierItem, Integer>> multiCalcData = new HashMap<>();
 
   @BindView(R.id.single_barrier_container) CardView singleBarrierContainer;
   @BindView(R.id.multi_barrier_container) CardView multiBarrierContainer;
+  @BindView(R.id.single_save) TextView singleSave;
+  @BindView(R.id.multi_save) TextView multiSave;
   @BindView(R.id.btn_minit) View btnMinit;
   @BindView(R.id.btn_movit) View btnMovit;
   @BindView(R.id.btn_add_barrier_type) View btnAddBarrierType;
@@ -55,6 +61,8 @@ public class CalculateFragment extends BaseBarrierPlanFragment
   private AddBarrierTypeDialogUtil dialogUtil;
   private AlertDialog addBarrierTypeDialog;
   private AlertDialog customBarrierTypeDialog;
+  private AlertDialog multiSaveDialog;
+  private AlertDialog singleSaveDialog;
   private Subject<String> metricChanged;
   private Disposable singleCalcEditTextDisposable;
   private Disposable btnMinitDisposable;
@@ -92,10 +100,18 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     addBarrierTypeDialog = dialogUtil.getAddBarrierTypeDialog(this);
     customBarrierTypeDialog =
         dialogUtil.getCustomBarrierTypeDialog(this, "feet");
+    multiSaveDialog = dialogUtil.getSaveDialog(this, true);
+    singleSaveDialog = dialogUtil.getSaveDialog(this, false);
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    multiCalcData.clear();
   }
 
   @Override public void onStart() {
     super.onStart();
+    listener.showMetricToolbar();
     observeViews();
   }
 
@@ -133,6 +149,20 @@ public class CalculateFragment extends BaseBarrierPlanFragment
 
   @Override public void addMovit() {
     setUpMultiView(BarrierType.MOVIT);
+  }
+
+  @Override public void saveMultiBarrierEvent(final String name, final Date date) {
+    final List<Pair<BarrierItem, Integer>> items = new ArrayList<>();
+    items.addAll(multiCalcData.values());
+    listener.saveEvent(name, date, items);
+  }
+
+  @Override public void saveSingleBarrierEvent(final String name, final Date date) {
+    final Integer length =
+        Integer.parseInt(((TextView) singleBarrierResult.findViewById(R.id.result))
+            .getText()
+            .toString());
+    listener.saveEvent(name, date, Arrays.asList(Pair.create(currentSingleType, length)));
   }
 
   @Override public void showAddCustomDialog() {
@@ -217,6 +247,16 @@ public class CalculateFragment extends BaseBarrierPlanFragment
         .subscribe(o -> addBarrierTypeDialog.show());
 
     metricChangedDisposable = metricChanged.subscribe(this::onMetricChanged);
+
+    RxView.clicks(singleSave)
+        .subscribe(
+            o -> singleSaveDialog.show()
+        );
+
+    RxView.clicks(multiSave)
+        .subscribe(
+            o -> multiSaveDialog.show()
+        );
   }
 
   private void onMetricChanged(final String metric) {

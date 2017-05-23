@@ -1,8 +1,7 @@
 package com.mlrinternational.barrierplan.ui.landing;
 
-import android.support.v4.util.Pair;
+import android.util.Pair;
 import com.mlrinternational.barrierplan.data.BarrierItem;
-import com.mlrinternational.barrierplan.data.BarrierType;
 import com.mlrinternational.barrierplan.data.Metric;
 import com.mlrinternational.barrierplan.ui.base.BasePresenter;
 import com.mlrinternational.barrierplan.utils.NavigationFactory;
