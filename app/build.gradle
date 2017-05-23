@@ -50,8 +50,6 @@ dependencies {
 
   compile "com.squareup.picasso:picasso:${PICASSO_VERSION}"
 
-  compile "com.google.code.gson:gson:${GSON_VERSION}"
-
   compile "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
   annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
 

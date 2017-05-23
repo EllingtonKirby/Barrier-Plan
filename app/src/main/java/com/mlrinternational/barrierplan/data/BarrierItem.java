@@ -1,8 +1,6 @@
 package com.mlrinternational.barrierplan.data;
 
-/**
- * Created by ellington on 5/13/17.
- */
+import org.json.JSONException;
 
 public interface BarrierItem {
   double getLengthImperial();
@@ -10,4 +8,6 @@ public interface BarrierItem {
   double getLengthMetric();
 
   String getType();
+
+  String getJsonString() throws JSONException;
 }

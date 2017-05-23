@@ -38,4 +38,15 @@
   <string name="link">www.mlrinternational.com</string>
   <string name="movit_description">MOVit Product Description</string>
   <string name="minit_description">MINit Product Description</string>
+  <string name="save_event">Save Event</string>
+  <string name="event_name">Event Name</string>
+  <string name="date">Event Date</string>
+  <string name="date_picker">Select Date</string>
+  <string name="SAVE">SAVE</string>
+  <string name="cancel">CANCEL</string>
+  <string name="event_history">Event History</string>
+  <string name="event_details">Event Details</string>
+  <string name="event_details_format">Event Details for %1$s</string>
+  <string name="sort_by">Sort By:</string>
+  <string name="details_content">%1$s, %2$s pcs, %3$s feet</string>
 </resources>

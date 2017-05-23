@@ -1,10 +1,11 @@
 package com.mlrinternational.barrierplan.ui.base;
 
-import android.support.v4.util.Pair;
+import android.util.Pair;
 import com.mlrinternational.barrierplan.data.BarrierItem;
-import com.mlrinternational.barrierplan.data.BarrierType;
-import com.mlrinternational.barrierplan.data.Metric;
+import com.mlrinternational.barrierplan.data.EventList;
 import io.reactivex.subjects.Subject;
+import java.util.Date;
+import java.util.List;
 
 public interface BarrierPlanFragmentListener {
   Pair<Integer, Double> getCalculation(Double length, BarrierItem currentSingleType);
@@ -16,4 +17,12 @@ public interface BarrierPlanFragmentListener {
   void showContactToolbar();
 
   void showMetricToolbar();
+
+  void saveEvent(final String name, final Date date, final List<Pair<BarrierItem, Integer>> items);
+
+  EventList getSavedEvents();
+
+  boolean removeEvent(int position);
+
+  void showSnackBar(String message);
 }
