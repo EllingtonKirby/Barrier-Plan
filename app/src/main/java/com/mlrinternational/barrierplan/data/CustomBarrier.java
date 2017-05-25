@@ -27,6 +27,15 @@ public class CustomBarrier implements BarrierItem {
     }
   }
 
+  public static CustomBarrier getFromJson(final String name, final String length) {
+    final Double value = Double.valueOf(length);
+    return new CustomBarrier(
+        name,
+        UnitUtils.convertUp(value, Metric.IMPERIAL).toString(),
+        Metric.IMPERIAL
+    );
+  }
+
   @Override public String getJsonString() throws JSONException {
     final JSONObject jsonObject = new JSONObject();
     jsonObject.put(TYPE, name);

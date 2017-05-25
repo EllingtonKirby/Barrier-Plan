@@ -18,7 +18,7 @@ public class BarrierItemDeserializer {
     } else if (MOVIT.getType().equals(type)) {
       return MOVIT;
     } else {
-      return new CustomBarrier(type, object.getString(LENGTH_IMPERIAL), Metric.IMPERIAL);
+      return CustomBarrier.getFromJson(type, object.getString(LENGTH_IMPERIAL));
     }
   }
 }

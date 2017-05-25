@@ -9,6 +9,7 @@ public class Event {
   private List<Pair<BarrierItem, Integer>> itemsByAmount;
   private String name;
   private Date date;
+
   public Event(
       final List<Pair<BarrierItem, Integer>> itemsByAmount,
       final String name,

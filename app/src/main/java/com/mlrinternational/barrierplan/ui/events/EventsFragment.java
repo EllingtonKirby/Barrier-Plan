@@ -7,6 +7,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -26,6 +28,7 @@ public class EventsFragment extends BaseBarrierPlanFragment implements ShowEvent
   private EventListAdapter eventListAdapter;
   private EventDetailsAdapter eventDetailsAdapter;
   private EventList events;
+  private ArrayAdapter<CharSequence> arrayAdapter;
 
   public static EventsFragment getInstance() {
     return new EventsFragment();
@@ -42,6 +45,12 @@ public class EventsFragment extends BaseBarrierPlanFragment implements ShowEvent
     itemDecoration.setDrawable(ContextCompat.getDrawable(getActivity(), R.color.gray));
     eventListAdapter = new EventListAdapter(getActivity(), this);
     eventDetailsAdapter = new EventDetailsAdapter(getActivity(), this);
+    arrayAdapter = ArrayAdapter.createFromResource(
+        getActivity(),
+        R.array.sorting_options,
+        android.R.layout.simple_spinner_item
+    );
+    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
   }
 
   @Override public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
@@ -56,6 +65,20 @@ public class EventsFragment extends BaseBarrierPlanFragment implements ShowEvent
       eventDetails.setAdapter(eventDetailsAdapter);
     }
     listener.showContactToolbar();
+    sortBy.setAdapter(arrayAdapter);
+    sortBy.setOnItemSelectedListener(
+        new AdapterView.OnItemSelectedListener() {
+          @Override public void onItemSelected(
+              final AdapterView<?> parent,
+              final View view,
+              final int position,
+              final long id) {
+            eventListAdapter.sort(position);
+          }
+
+          @Override public void onNothingSelected(final AdapterView<?> parent) {}
+        }
+    );
   }
 
   @Override public void deleteItemAt(final int position) {

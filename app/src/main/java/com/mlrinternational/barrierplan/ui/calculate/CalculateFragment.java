@@ -92,6 +92,7 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     super.onViewCreated(view, savedInstanceState);
     list.setLayoutManager(new LinearLayoutManager(getContext()));
     list.setAdapter(adapter);
+    list.setNestedScrollingEnabled(false);
   }
 
   @Override public void onActivityCreated(@Nullable final Bundle savedInstanceState) {

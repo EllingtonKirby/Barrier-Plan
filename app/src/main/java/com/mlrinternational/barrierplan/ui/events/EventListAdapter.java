@@ -14,6 +14,8 @@ import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.Event;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +25,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
   private final DateFormat dateFormat;
   private final ShowEventDetailsListener listener;
   private List<Event> eventList;
+  private Comparator<Event> eventComparator = (o1, o2) -> o1.getDate().compareTo(o2.getDate());
+  private Comparator<Event> eventNameComparator = (o1, o2) -> o1.getName().compareTo(o2.getName());
+  private Comparator<Event> currentComparator;
 
   public EventListAdapter(
       final Context context,
@@ -72,6 +77,19 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
   public void setEventList(final List<Event> eventList) {
     this.eventList = eventList;
     notifyDataSetChanged();
+  }
+
+  public void sort(final int position) {
+    if (eventList != null && !eventList.isEmpty()) {
+      if (position == 1) {
+        Collections.sort(eventList, eventComparator);
+        currentComparator = eventComparator;
+      } else {
+        Collections.sort(eventList, eventNameComparator);
+        currentComparator = eventNameComparator;
+      }
+      notifyDataSetChanged();
+    }
   }
 
   public class EventListViewHolder extends RecyclerView.ViewHolder {
