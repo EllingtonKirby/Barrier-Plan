@@ -2,11 +2,13 @@ package com.mlrinternational.barrierplan.ui.calculate;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierItem;
@@ -48,6 +52,7 @@ public class CalculateFragment extends BaseBarrierPlanFragment
   @BindView(R.id.multi_save) TextView multiSave;
   @BindView(R.id.btn_minit) View btnMinit;
   @BindView(R.id.btn_movit) View btnMovit;
+  @BindView(R.id.btn_xtendit) View btnXtendit;
   @BindView(R.id.btn_add_barrier_type) View btnAddBarrierType;
   @BindView(R.id.single_barrier_result) View singleBarrierResult;
   @BindView(R.id.text_entry_length_needed) EditText singleCalcEditText;
@@ -55,7 +60,14 @@ public class CalculateFragment extends BaseBarrierPlanFragment
   @BindView(R.id.list) RecyclerView list;
   @BindView(R.id.length_total) TextView totalLengthView;
   @BindView(R.id.barriers_total) TextView totalBarriersView;
+  @BindViews({
+                 R.id.btn_movit,
+                 R.id.btn_minit,
+                 R.id.btn_xtendit
+             })
+  List<TextView> buttonViews;
 
+  private ButterKnife.Setter<TextView, Integer> setDrawable;
   private LayoutInflater inflater;
   private BarrierType currentSingleType = BarrierType.MOVIT;
   private AddBarrierTypeDialogUtil dialogUtil;
@@ -72,6 +84,7 @@ public class CalculateFragment extends BaseBarrierPlanFragment
   private Metric currentMetric = Metric.IMPERIAL;
   private String metricString = "feet";
   private MultipleBarrierTypeAdapter adapter;
+  private Disposable btnXtenditDisposable;
 
   public static CalculateFragment getInstance() {
     return new CalculateFragment();
@@ -86,6 +99,10 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     inflater = LayoutInflater.from(getContext());
     dialogUtil = new AddBarrierTypeDialogUtil(getContext(), inflater);
     adapter = new MultipleBarrierTypeAdapter(getActivity(), this, listener);
+    setDrawable = (view, value, index) -> view.setBackground(ContextCompat.getDrawable(
+        getActivity(),
+        value
+    ));
   }
 
   @Override public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
@@ -105,15 +122,15 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     singleSaveDialog = dialogUtil.getSaveDialog(this, false);
   }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    multiCalcData.clear();
-  }
-
   @Override public void onStart() {
     super.onStart();
     listener.showMetricToolbar();
     observeViews();
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    multiCalcData.clear();
   }
 
   @Override public void onDestroy() {
@@ -152,6 +169,10 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     setUpMultiView(BarrierType.MOVIT);
   }
 
+  @Override public void addXtendit() {
+    setUpMultiView(BarrierType.XTENDIT);
+  }
+
   @Override public void saveMultiBarrierEvent(final String name, final Date date) {
     final List<Pair<BarrierItem, Integer>> items = new ArrayList<>();
     items.addAll(multiCalcData.values());
@@ -181,44 +202,46 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     int totalBarriers = 0;
     for (Pair<BarrierItem, Integer> pair : multiCalcData.values()) {
       if (currentMetric == Metric.IMPERIAL) {
-        totalLength += pair.second * pair.first.getLengthImperial();
+        totalLength +=
+            BarrierType.XTENDIT.getType().equals(pair.first.getType()) ?
+            (pair.second / 2) * pair.first.getLengthImperial() :
+            pair.second * pair.first.getLengthImperial();
       } else {
-        totalLength += pair.second * pair.first.getLengthMetric();
+        totalLength +=
+            BarrierType.XTENDIT.getType().equals(pair.first.getType()) ?
+            (pair.second / 2) * pair.first.getLengthMetric() :
+            pair.second * pair.first.getLengthMetric();
       }
       totalBarriers += pair.second;
     }
-    totalLength = UnitUtils.convertUp(totalLength, currentMetric);
+    totalLength = Math.ceil(UnitUtils.convertUp(totalLength, currentMetric));
     final String totalLengthString = String.format(format, totalLength, metricString);
     totalLengthView.setText(totalLengthString);
     totalBarriersView.setText(String.valueOf(totalBarriers));
   }
 
-  private void changeSingleCalcBarrierType() {
-    final View viewToChange;
-    final View prevView;
-    if (currentSingleType == BarrierType.MOVIT) {
-      viewToChange = btnMinit;
-      prevView = btnMovit;
-      currentSingleType = BarrierType.MINIT;
-    } else {
-      viewToChange = btnMovit;
-      prevView = btnMinit;
-      currentSingleType = BarrierType.MOVIT;
-    }
-    viewToChange.setBackground(ResourcesCompat.getDrawable(getResources(), R.color.gray, null));
-    prevView.setBackground(ResourcesCompat.getDrawable(getResources(), R.color.colorWhite, null));
+  private void changeSingleCalcBarrierType(final View viewSelected, final BarrierType selected) {
+    currentSingleType = selected;
+    ButterKnife.apply(buttonViews, setDrawable, R.color.colorWhite);
+    viewSelected.setBackground(ResourcesCompat.getDrawable(
+        getResources(),
+        R.drawable.selected_logo,
+        null
+    ));
   }
 
   private void displaySingleCalcResult() {
-    final TextView resultText = (TextView) singleBarrierResult.findViewById(R.id.result);
-    final TextView remainderText = (TextView) singleBarrierResult.findViewById(R.id.remainder);
-    final Pair<Integer, Double> resultAmount = listener.getCalculation(
-        Double.valueOf(singleCalcEditText.getText().toString()),
-        currentSingleType
-    );
-    resultText.setText(String.valueOf(resultAmount.first));
-    final String remainder = String.valueOf(resultAmount.second) + listener.getMetricString();
-    remainderText.setText(remainder);
+    if (!singleCalcEditText.getText().toString().isEmpty()) {
+      final TextView resultText = (TextView) singleBarrierResult.findViewById(R.id.result);
+      final TextView remainderText = (TextView) singleBarrierResult.findViewById(R.id.remainder);
+      final Pair<Integer, Double> resultAmount = listener.getCalculation(
+          Double.valueOf(singleCalcEditText.getText().toString()),
+          currentSingleType
+      );
+      resultText.setText(String.valueOf(resultAmount.first));
+      final String remainder = String.valueOf(resultAmount.second) + listener.getMetricString();
+      remainderText.setText(remainder);
+    }
   }
 
   private void observeViews() {
@@ -229,19 +252,26 @@ public class CalculateFragment extends BaseBarrierPlanFragment
                   && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                 displaySingleCalcResult();
               }
-            }
+            },
+            error -> Log.e("### ERROR", error.getMessage())
         );
 
     btnMinitDisposable = RxView.clicks(btnMinit)
         .filter(o -> currentSingleType != BarrierType.MINIT)
         .subscribe(
-            o -> changeSingleCalcBarrierType()
+            o -> changeSingleCalcBarrierType(btnMinit, BarrierType.MINIT)
         );
 
     btnMovitDisposable = RxView.clicks(btnMovit)
         .filter(o -> currentSingleType != BarrierType.MOVIT)
         .subscribe(
-            o -> changeSingleCalcBarrierType()
+            o -> changeSingleCalcBarrierType(btnMovit, BarrierType.MOVIT)
+        );
+
+    btnXtenditDisposable = RxView.clicks(btnXtendit)
+        .filter(o -> currentSingleType != BarrierType.XTENDIT)
+        .subscribe(
+            o -> changeSingleCalcBarrierType(btnXtendit, BarrierType.XTENDIT)
         );
 
     btnAddBarrierTypeDisposable = RxView.clicks(btnAddBarrierType)

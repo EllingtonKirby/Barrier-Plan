@@ -49,4 +49,7 @@
   <string name="event_details_format">Event Details for %1$s</string>
   <string name="sort_by">Sort By:</string>
   <string name="details_content">%1$s, %2$s pcs, %3$s feet</string>
+  <string name="movit">Movit</string>
+  <string name="minit">Minit</string>
+  <string name="xtendit">Xtendit</string>
 </resources>

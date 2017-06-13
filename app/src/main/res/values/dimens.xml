@@ -19,4 +19,5 @@
   <dimen name="spacing_20dp">20dp</dimen>
   <dimen name="spacing_56dp">56dp</dimen>
   <dimen name="text_size_2sp">2sp</dimen>
+  <dimen name="spacing_2dp">2dp</dimen>
 </resources>

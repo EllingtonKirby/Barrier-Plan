@@ -35,38 +35,41 @@
         android:gravity="center"
         android:orientation="horizontal"
         >
-      <FrameLayout
+      <TextView
           android:id="@+id/btn_movit"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:background="@color/gray"
-          >
-        <ImageView
-            android:layout_width="@dimen/image_button_width"
-            android:layout_height="@dimen/image_button_height"
-            android:layout_gravity="center"
-            android:src="@drawable/movit_logo"
-            />
-      </FrameLayout>
+          android:background="@drawable/selected_logo"
+          android:text="@string/movit"
+          android:gravity="center"
+          />
       <View
           android:layout_width="1dp"
           android:layout_height="match_parent"
           android:background="@color/gray"
           />
-      <FrameLayout
+      <TextView
           android:id="@+id/btn_minit"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          >
-        <ImageView
-            android:layout_width="@dimen/image_button_width"
-            android:layout_height="@dimen/image_button_height"
-            android:layout_gravity="center"
-            android:src="@drawable/minit_logo"
-            />
-      </FrameLayout>
+          android:text="@string/minit"
+          android:gravity="center"
+          />
+      <View
+          android:layout_width="1dp"
+          android:layout_height="match_parent"
+          android:background="@color/gray"
+          />
+      <TextView
+          android:id="@+id/btn_xtendit"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/xtendit"
+          android:gravity="center"
+          />
     </LinearLayout>
     <View
         android:layout_width="match_parent"

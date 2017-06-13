@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import static com.mlrinternational.barrierplan.data.BarrierType.MINIT;
 import static com.mlrinternational.barrierplan.data.BarrierType.MOVIT;
+import static com.mlrinternational.barrierplan.data.BarrierType.XTENDIT;
 import static com.mlrinternational.barrierplan.data.CustomBarrier.LENGTH_IMPERIAL;
 import static com.mlrinternational.barrierplan.data.CustomBarrier.TYPE;
 
@@ -17,7 +18,10 @@ public class BarrierItemDeserializer {
       return MINIT;
     } else if (MOVIT.getType().equals(type)) {
       return MOVIT;
-    } else {
+    } else if (XTENDIT.getType().equals(type)) {
+      return XTENDIT;
+    }
+    else {
       return CustomBarrier.getFromJson(type, object.getString(LENGTH_IMPERIAL));
     }
   }

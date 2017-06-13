@@ -10,5 +10,7 @@ public interface AddBarrierTypeDialogListener {
 
   void addMovit();
 
+  void addXtendit();
+
   void showAddCustomDialog();
 }

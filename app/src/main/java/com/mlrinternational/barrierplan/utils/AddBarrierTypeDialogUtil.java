@@ -49,6 +49,13 @@ public class AddBarrierTypeDialogUtil {
           dialog.dismiss();
         }
     );
+    final View btnXtendit = ButterKnife.findById(view, R.id.btn_xtendit);
+    btnXtendit.setOnClickListener(
+        v -> {
+          listener.addXtendit();
+          dialog.dismiss();
+        }
+    );
     final View btnCustom = ButterKnife.findById(view, R.id.btn_custom);
     btnCustom.setOnClickListener(
         v -> {

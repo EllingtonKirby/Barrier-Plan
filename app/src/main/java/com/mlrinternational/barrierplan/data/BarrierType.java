@@ -9,8 +9,9 @@ import static com.mlrinternational.barrierplan.data.CustomBarrier.TYPE;
 
 public enum BarrierType implements BarrierItem {
 
-  MOVIT("MOVit", 191.77, 75.5, R.drawable.movit_logo),
-  MINIT("MINit", 118.11, 46.5, R.drawable.minit_logo);
+  MOVIT("Movit", 191.77, 75.5, R.drawable.movit_logo),
+  MINIT("Minit", 118.11, 46.5, R.drawable.minit_logo),
+  XTENDIT("Xtendit", 154.94, 61,  R.drawable.xtendit_logo);
 
   private String type;
   private double lengthMetric;

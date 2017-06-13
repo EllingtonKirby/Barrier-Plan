@@ -64,7 +64,9 @@ public class MultipleBarrierTypeAdapter
             charSequence -> {
               final Double value = Double.valueOf(charSequence.toString());
               final String barrier = value == 1 ? "Barrier" : "Barriers";
-              final int numBarriers = fragmentListener.getCalculation(value, item).first;
+              final int numBarriers = BarrierType.XTENDIT.getType().equals(item.getType()) ?
+                                      fragmentListener.getCalculation(value, item).first * 2 :
+                                      fragmentListener.getCalculation(value, item).first;
               final String result = String.format(
                   format,
                   numBarriers,
@@ -76,11 +78,6 @@ public class MultipleBarrierTypeAdapter
         );
   }
 
-  @Override public void onViewDetachedFromWindow(final BarrierTypeViewHolder holder) {
-    super.onViewDetachedFromWindow(holder);
-    holder.textObserver.dispose();
-  }
-
   @Override public BarrierTypeViewHolder onCreateViewHolder(
       final ViewGroup parent,
       final int viewType) {
@@ -89,6 +86,11 @@ public class MultipleBarrierTypeAdapter
             .from(parent.getContext())
             .inflate(R.layout.item_mult_barrier_calculation, parent, false)
     );
+  }
+
+  @Override public void onViewDetachedFromWindow(final BarrierTypeViewHolder holder) {
+    super.onViewDetachedFromWindow(holder);
+    holder.textObserver.dispose();
   }
 
   public void addItem(final BarrierItem item) {
