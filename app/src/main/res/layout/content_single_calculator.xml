@@ -41,8 +41,8 @@
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:background="@drawable/selected_logo"
-          android:text="@string/movit"
           android:gravity="center"
+          android:text="@string/movit"
           android:textSize="@dimen/text_size_20sp"
           />
       <View
@@ -55,8 +55,8 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:text="@string/minit"
           android:gravity="center"
+          android:text="@string/minit"
           android:textSize="@dimen/text_size_20sp"
           />
       <View
@@ -69,8 +69,8 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:text="@string/xtendit"
           android:gravity="center"
+          android:text="@string/xtendit"
           android:textSize="@dimen/text_size_20sp"
           />
     </LinearLayout>
@@ -93,12 +93,19 @@
           android:text="@string/length_needed"
           android:textSize="@dimen/text_size_18sp"
           />
-      <android.support.design.widget.TextInputEditText
-          android:id="@+id/text_entry_length_needed"
+      <android.support.design.widget.TextInputLayout
           android:layout_width="@dimen/length_entry_text"
           android:layout_height="wrap_content"
-          android:inputType="number"
-          />
+          android:layout_gravity="center"
+          >
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/text_entry_length_needed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/length"
+            android:inputType="number"
+            />
+      </android.support.design.widget.TextInputLayout>
       <TextView
           android:id="@+id/unit"
           android:layout_width="wrap_content"

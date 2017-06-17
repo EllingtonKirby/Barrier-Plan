@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +18,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierItem;
 import com.mlrinternational.barrierplan.data.BarrierType;
@@ -228,6 +228,7 @@ public class CalculateFragment extends BaseBarrierPlanFragment
         R.drawable.selected_logo,
         null
     ));
+    displaySingleCalcResult();
   }
 
   private void displaySingleCalcResult() {
@@ -245,13 +246,14 @@ public class CalculateFragment extends BaseBarrierPlanFragment
   }
 
   private void observeViews() {
-    singleCalcEditTextDisposable = RxView.keys(singleCalcEditText)
+    singleCalcEditTextDisposable = RxTextView
+        .textChanges(singleCalcEditText)
+        .map(CharSequence::toString)
+        .filter(s -> !s.isEmpty())
+        .distinctUntilChanged()
         .subscribe(
-            keyEvent -> {
-              if (keyEvent.getAction() == KeyEvent.ACTION_DOWN
-                  && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                displaySingleCalcResult();
-              }
+            text -> {
+              displaySingleCalcResult();
             },
             error -> Log.e("### ERROR", error.getMessage())
         );
