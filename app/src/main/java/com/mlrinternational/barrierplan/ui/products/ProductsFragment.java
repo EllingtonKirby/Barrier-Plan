@@ -2,49 +2,80 @@ package com.mlrinternational.barrierplan.ui.products;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-import com.jakewharton.rxbinding2.view.RxView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierType;
 import com.mlrinternational.barrierplan.ui.base.BaseBarrierPlanFragment;
-import io.reactivex.disposables.Disposable;
-import java.util.Arrays;
+import com.mlrinternational.barrierplan.ui.products.ProductsSelectorAdapter.ChangeProductsListener;
 import java.util.List;
 
-public class ProductsFragment extends BaseBarrierPlanFragment {
+public class ProductsFragment extends BaseBarrierPlanFragment implements
+    ChangeProductsListener {
 
-  static final ButterKnife.Setter<TextView, List<String>> setText =
-      (view, value, index) -> view.setText(value.get(index));
+  static final ButterKnife.Setter<TextView, String[]> setText =
+      (view, value, index) -> view.setText(value[index]);
 
-  @BindView(R.id.btn_movit) View btnMovit;
-  @BindView(R.id.btn_minit) View btnMinit;
   @BindView(R.id.description_title) TextView descriptionTitle;
   @BindViews({
                  R.id.length,
                  R.id.height,
                  R.id.weight,
-                 R.id.load,
                  R.id.resistance,
                  R.id.handling
              })
   List<TextView> descriptionViews;
-  @BindView(R.id.pager) ViewPager pager;
+  @BindView(R.id.pager) RecyclerView pager;
+  @BindView(R.id.product_selector) RecyclerView productsSelector;
+  @BindView(R.id.normal_colors) View normalColors;
+  @BindView(R.id.orange_colors) View orangeColors;
 
-  private ProductsImageGalleryPagerAdapter movitAdapter;
-  private ProductsImageGalleryPagerAdapter minitAdapter;
-  private BarrierType currentDisplay = BarrierType.MINIT;
-  private Disposable btnMinitDisposable;
-  private Disposable btnMovitDisposable;
+  private ProductsSelectorAdapter selectorAdapter;
+  private ProductsImageGalleryAdapter imageGalleryAdapter;
+
   private int[] movitResources = {
       R.drawable.movit1, R.drawable.movit2, R.drawable.movit3, R.drawable.movit4
   };
   private int[] minitResources = {
       R.drawable.minit1, R.drawable.minit2, R.drawable.minit3, R.drawable.minit4
+  };
+  private int[] xtenditResources = {
+      R.drawable.rsz_xtendit
+  };
+  private int[] multiGateResources = {
+      R.drawable.multi_gate
+  };
+  private int[][] resourceList = {
+      movitResources, minitResources, xtenditResources, multiGateResources
+  };
+  private String[] movitDescription = {
+      "6'6\" (78\")", "3'3\" (39\")", "25.5 lbs. (11.5 kg)",
+      "+131F,-4F (+55C,-20C)", "Ships via LTL"
+  };
+  private String[] minitDescription = {
+      "4'1\" (49\")", "3'3\" (39\")", "15.4 lbs", "+131F,-4F (+55C,-20C)", "Ships via LTL"
+  };
+
+  private String[] xtenditDescription = {
+      "5'1\" (61\")", "10.4\"", "7.6 lbs (3.5kg)", "+131F,-4F (+55C,-20C)", "Ships via LTL"
+  };
+
+  private String[] multiGateDescription = {
+      "5.35\" closed, 90\" (x ft) opened", "43\"", "15 lbs empty, 35 lbs filled with water",
+      "+ 55 C – + 130 F", "Ships via LTL"
+  };
+  private String[][] descriptions = {
+      movitDescription, minitDescription, xtenditDescription, multiGateDescription
+  };
+
+  private int[] titles = {
+      R.string.movit_description, R.string.minit_description, R.string.xtendit_description,
+      R.string.multi_gate_description
   };
 
   public static ProductsFragment getInstance() {
@@ -57,85 +88,49 @@ public class ProductsFragment extends BaseBarrierPlanFragment {
 
   @Override public void onCreate(@Nullable final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    movitAdapter = new ProductsImageGalleryPagerAdapter(getContext());
-    minitAdapter = new ProductsImageGalleryPagerAdapter(getContext());
+    selectorAdapter = new ProductsSelectorAdapter(
+        getActivity(),
+        BarrierType.values(),
+        this
+    );
+    imageGalleryAdapter = new ProductsImageGalleryAdapter(getActivity());
   }
 
   @Override public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    movitAdapter.setResources(movitResources);
-    minitAdapter.setResources(minitResources);
-    pager.setOffscreenPageLimit(3);
+    productsSelector.setLayoutManager(new LinearLayoutManager(
+        getActivity(),
+        LinearLayoutManager.HORIZONTAL,
+        false
+    ));
+    productsSelector.setAdapter(selectorAdapter);
+    pager.setLayoutManager(new LinearLayoutManager(
+        getActivity(),
+        LinearLayoutManager.HORIZONTAL,
+        false
+    ));
+    pager.setAdapter(imageGalleryAdapter);
   }
 
   @Override public void onStart() {
     super.onStart();
-    observeViews();
     listener.showContactToolbar();
-    changeDisplayedBarrierType();
+    selectorAdapter.setSelected(0);
+    changeProduct(0);
   }
 
-  @Override public void onDestroy() {
-    super.onDestroy();
-    btnMinitDisposable.dispose();
-    btnMovitDisposable.dispose();
-    btnMovitDisposable = null;
-    btnMinitDisposable = null;
+  @Override public void changeProduct(final int position) {
+    imageGalleryAdapter.setResources(resourceList[position]);
+    setDescriptionViews(descriptions[position]);
+    descriptionTitle.setText(getString(titles[position]));
+    normalColors.setVisibility(
+        position == BarrierType.values().length - 1 ? View.GONE : View.VISIBLE);
+    orangeColors.setVisibility(
+        position == BarrierType.values().length - 1 ? View.VISIBLE : View.GONE);
+    selectorAdapter.notifyDataSetChanged();
   }
 
-  private void changeDisplayedBarrierType() {
-    switch (currentDisplay) {
-      case MOVIT:
-        currentDisplay = BarrierType.MINIT;
-        btnMinit.setBackground(getResources().getDrawable(R.color.gray));
-        btnMovit.setBackground(getResources().getDrawable(R.color.colorWhite));
-        descriptionTitle.setText(getString(R.string.movit_description));
-        pager.setAdapter(minitAdapter);
-        break;
-      case MINIT:
-        currentDisplay = BarrierType.MOVIT;
-        btnMinit.setBackground(getResources().getDrawable(R.color.colorWhite));
-        btnMovit.setBackground(getResources().getDrawable(R.color.gray));
-        descriptionTitle.setText(getString(R.string.minit_description));
-        pager.setAdapter(movitAdapter);
-        break;
-    }
-
-    setDescriptionViews(currentDisplay);
-  }
-
-  private List<String> getDescriptionTextFactory(final BarrierType currentDisplay) {
-    final List<String> values;
-    final String[] strings;
-    if (currentDisplay == BarrierType.MOVIT) {
-      strings = new String[] {
-          "6'6\" (78\")", "3'3\" (39\")", "25.5 lbs. (11.5 kg)", "1102 lbs. (500 kg)",
-          "+131F,-4F (+55C,-20C)", "Ships via LTL"
-      };
-    } else {
-      strings = new String[] {
-          "4'1\" (49\")", "3'3\" (39\")", "15.4 lbs", "", "+131F,-4F (+55C,-20C)", "Ships via LTL"
-      };
-    }
-    values = Arrays.asList(strings);
-    return values;
-  }
-
-  private void observeViews() {
-    btnMinitDisposable = RxView.clicks(btnMinit)
-        .filter(o -> currentDisplay != BarrierType.MINIT)
-        .subscribe(
-            o -> changeDisplayedBarrierType()
-        );
-
-    btnMovitDisposable = RxView.clicks(btnMovit)
-        .filter(o -> currentDisplay != BarrierType.MOVIT)
-        .subscribe(
-            o -> changeDisplayedBarrierType()
-        );
-  }
-
-  private void setDescriptionViews(final BarrierType currentDisplay) {
-    ButterKnife.apply(descriptionViews, setText, getDescriptionTextFactory(currentDisplay));
+  private void setDescriptionViews(final String[] currentDisplay) {
+    ButterKnife.apply(descriptionViews, setText, currentDisplay);
   }
 }

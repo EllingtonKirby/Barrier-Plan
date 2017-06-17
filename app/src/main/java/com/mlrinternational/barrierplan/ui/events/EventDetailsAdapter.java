@@ -52,7 +52,7 @@ public class EventDetailsAdapter
       final double totalLength = Math.round((item.first.getLengthImperial() * item.second)/12);
       final String content = context.getString(
           R.string.details_content,
-          item.first.getType(),
+          item.first instanceof BarrierType ? "" : item.first.getType(),
           String.valueOf(item.second),
           String.valueOf(totalLength)
       );

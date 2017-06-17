@@ -1,36 +1,46 @@
 package com.mlrinternational.barrierplan.utils;
 
 import com.mlrinternational.barrierplan.data.Metric;
-
+import javax.measure.Measure;
+import javax.measure.converter.UnitConverter;
+import javax.measure.quantity.Length;
+import static javax.measure.unit.NonSI.*;
+import static javax.measure.unit.SI.*;
 public class UnitUtils {
-
-  public static Double convertDown(final Double amount, final Metric metric) {
-    final Double result;
-    switch (metric) {
-      case IMPERIAL:
-        result = amount * 12;
-        break;
-      case METRIC:
-        result =  amount * 100;
-        break;
-      default:
-        result =  amount * 12;
-        break;
-    }
-    return result;
-  }
 
   public static Double convertBetween(final Double amount, final Metric currentMetric) {
     final Double result;
     switch (currentMetric) {
       case IMPERIAL:
-        result = amount * .3048;
+        UnitConverter toMetric = FOOT.getConverterTo(METER);
+        result = toMetric.convert(amount);
         break;
       case METRIC:
-        result =amount * 3.28;
+        UnitConverter toImperial = METER.getConverterTo(FOOT);
+        result = toImperial.convert(amount);
         break;
       default:
-        result = amount * .3048;
+        UnitConverter toMetricDefault = FOOT.getConverterTo(METER);
+        result = toMetricDefault.convert(amount);
+        break;
+    }
+    return result;
+  }
+
+  public static Double convertDown(final Double amount, final Metric metric) {
+    final Double result;
+    switch (metric) {
+      case IMPERIAL:
+        UnitConverter toFeet = FOOT.getConverterTo(INCH);
+        result = toFeet.convert(amount);
+        break;
+      case METRIC:
+        UnitConverter toMeters = METER.getConverterTo(CENTIMETER);
+        result = toMeters.convert(amount);
+        break;
+      default:
+        UnitConverter toFeetDefault = FOOT.getConverterTo(INCH);
+        result = toFeetDefault.convert(amount);
         break;
     }
     return result;
@@ -40,13 +50,16 @@ public class UnitUtils {
     final Double result;
     switch (currentMetric) {
       case IMPERIAL:
-        result = amount / 12;
+        UnitConverter toFeet = INCH.getConverterTo(FOOT);
+        result = toFeet.convert(amount);
         break;
       case METRIC:
-        result = amount / 100;
+        UnitConverter toMeters = CENTIMETER.getConverterTo(METER);
+        result = toMeters.convert(amount);
         break;
       default:
-        result = amount / 12;
+        UnitConverter toFeetDefault = INCH.getConverterTo(FOOT);
+        result = toFeetDefault.convert(amount);
         break;
     }
     return result;

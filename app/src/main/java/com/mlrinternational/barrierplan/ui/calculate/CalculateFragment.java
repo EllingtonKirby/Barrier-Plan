@@ -82,7 +82,7 @@ public class CalculateFragment extends BaseBarrierPlanFragment
   private Disposable metricChangedDisposable;
   private Disposable btnAddBarrierTypeDisposable;
   private Metric currentMetric = Metric.IMPERIAL;
-  private String metricString = "feet";
+  private String metricString = "lft";
   private MultipleBarrierTypeAdapter adapter;
   private Disposable btnXtenditDisposable;
 

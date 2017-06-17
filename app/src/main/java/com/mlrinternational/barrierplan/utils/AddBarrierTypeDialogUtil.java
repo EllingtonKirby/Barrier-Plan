@@ -78,11 +78,13 @@ public class AddBarrierTypeDialogUtil {
     final View add = ButterKnife.findById(view, R.id.btn_add);
     add.setOnClickListener(
         v -> {
-          listener.addCustomBarrierType(
-              name.getText().toString(),
-              length.getText().toString()
-          );
-          dialog.dismiss();
+          if (!name.getText().toString().isEmpty() && !length.getText().toString().isEmpty()) {
+            listener.addCustomBarrierType(
+                name.getText().toString(),
+                length.getText().toString()
+            );
+            dialog.dismiss();
+          }
         }
     );
     final View cancel = ButterKnife.findById(view, R.id.btn_cancel);

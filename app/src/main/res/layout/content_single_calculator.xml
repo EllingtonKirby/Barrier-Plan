@@ -43,6 +43,7 @@
           android:background="@drawable/selected_logo"
           android:text="@string/movit"
           android:gravity="center"
+          android:textSize="@dimen/text_size_20sp"
           />
       <View
           android:layout_width="1dp"
@@ -56,6 +57,7 @@
           android:layout_weight="1"
           android:text="@string/minit"
           android:gravity="center"
+          android:textSize="@dimen/text_size_20sp"
           />
       <View
           android:layout_width="1dp"
@@ -69,6 +71,7 @@
           android:layout_weight="1"
           android:text="@string/xtendit"
           android:gravity="center"
+          android:textSize="@dimen/text_size_20sp"
           />
     </LinearLayout>
     <View

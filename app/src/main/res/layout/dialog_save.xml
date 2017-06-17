@@ -16,6 +16,7 @@
   <TableLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:shrinkColumns="*"
       >
     <TableRow
         android:layout_gravity="center"
@@ -27,7 +28,7 @@
           />
       <EditText
           android:id="@+id/event_name"
-          android:layout_width="@dimen/spacing_100dp"
+          android:layout_width="@dimen/spacing_200dp"
           />
     </TableRow>
     <TableRow

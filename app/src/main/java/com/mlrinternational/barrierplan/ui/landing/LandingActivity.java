@@ -74,6 +74,11 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
     showCalculate();
     bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
     sharedPreferences = getSharedPreferences("BarrierPlan", MODE_PRIVATE);
+    toolbar.setTitle(null);
+    toolbar.setSubtitle(null);
+    setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    getSupportActionBar().setTitle(null);
   }
 
   @Override protected void onResume() {

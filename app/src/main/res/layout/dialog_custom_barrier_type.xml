@@ -15,15 +15,15 @@
       android:textSize="@dimen/text_size_20sp"
       />
 
-  <FrameLayout
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
+      android:orientation="vertical"
       >
 
     <EditText
         android:id="@+id/entry_name"
-        android:layout_width="@dimen/spacing_100dp"
+        android:layout_width="@dimen/spacing_200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/spacing_40dp"
@@ -32,24 +32,23 @@
 
     <EditText
         android:id="@+id/entry_length"
-        android:layout_width="@dimen/spacing_100dp"
+        android:layout_width="@dimen/spacing_200dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginEnd="@dimen/spacing_60dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/spacing_40dp"
         android:hint="@string/length"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         />
 
     <TextView
         android:id="@+id/unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|center"
-        android:layout_marginEnd="@dimen/spacing_40dp"
+        android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/feet"
         />
-  </FrameLayout>
+  </LinearLayout>
 
 
   <LinearLayout
