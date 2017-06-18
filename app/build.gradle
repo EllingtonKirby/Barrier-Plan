@@ -6,6 +6,19 @@ repositories {
 }
 
 android {
+  signingConfigs {
+    config {
+      if (rootProject.file('local.properties').exists()) {
+        final def props = new Properties()
+        props.load(new FileInputStream(rootProject.file('local.properties')))
+
+        storeFile file(props['storeFile'])
+        storePassword props['storePassword']
+        keyAlias = props['keyAlias']
+        keyPassword props['storePassword']
+      }
+    }
+  }
   compileSdkVersion 26
   buildToolsVersion "26.0.0"
   defaultConfig {
@@ -15,7 +28,9 @@ android {
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    signingConfig signingConfigs.config
   }
+
   buildTypes {
     debug {
       minifyEnabled false
@@ -38,7 +53,7 @@ def final LEAK_CANARY_VERSION = "1.5.1"
 
 dependencies {
   testCompile 'junit:junit:4.12'
-  compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile fileTree(include: ['*.jar'], dir: 'libs')
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
@@ -46,19 +61,14 @@ dependencies {
   compile "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
   compile "com.android.support:recyclerview-v7:${SUPPORT_LIBRARY_VERSION}"
   compile "com.android.support:cardview-v7:${SUPPORT_LIBRARY_VERSION}"
-
   compile "com.squareup.picasso:picasso:${PICASSO_VERSION}"
-
   compile "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
   annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
-
   compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
   compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-
   //LeakCanary
   debugCompile "com.squareup.leakcanary:leakcanary-android:${LEAK_CANARY_VERSION}"
   releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${LEAK_CANARY_VERSION}"
   testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${LEAK_CANARY_VERSION}"
-
   compile files('libs/jscience.jar')
 }
