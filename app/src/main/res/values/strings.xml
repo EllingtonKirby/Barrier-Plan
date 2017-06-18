@@ -30,12 +30,12 @@
   <string name="height">Height:</string>
   <string name="weight">Weight</string>
   <string name="load">Accepted Load:</string>
-  <string name="resistance">Thermal Resistance:</string>
+  <string name="resistance">Material:</string>
   <string name="handling">Shipping and Handling:</string>
   <string name="available_colors">Available Colors:</string>
   <string name="check_us_out">Check us out at</string>
   <string name="contact_us">Contact us at</string>
-  <string name="phone_number">800-281-5229</string>
+  <string name="phone_number">800–2811-5229</string>
   <string name="email">mlr@mlrinternational.com</string>
   <string name="link">www.mlrinternational.com</string>
   <string name="movit_description">Movit Product Description</string>

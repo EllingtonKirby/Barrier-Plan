@@ -55,21 +55,20 @@ public class ProductsFragment extends BaseBarrierPlanFragment implements
       movitResources, minitResources, xtenditResources, multiGateResources
   };
   private String[] movitDescription = {
-      "6'6\" (78\")", "3'3\" (39\")", "25.5 lbs. (11.5 kg)",
-      "+131F,-4F (+55C,-20C)", "Ships via LTL"
+      "6'6\" (78\")", "3'3\" (39\")", "25.5 lbs. (11.5 kg)", "High Strength Polypropylene",
+      "Ships via LTL"
   };
   private String[] minitDescription = {
-      "4'1\" (49\")", "3'3\" (39\")", "15.4 lbs", "", "Ships via LTL"
+      "4'1\" (49\")", "3'3\" (39\")", "15.4 lbs", "High Strength Polypropylene", "Ships via LTL"
   };
 
   private String[] xtenditDescription = {
-      "5'1\" (61\")", "10.4\"", "7.6 lbs (3.5kg)", "+131F,-4F (+55C,-20C)", "Ships via LTL"
+      "5'1\" (61\")", "10.4\"", "7.6 lbs (3.5kg)", "High Strength Polypropylene", "Ships via LTL"
   };
 
   private String[] multiGateDescription = {
-      "Made from high strength HDPE plastic. 5.35\" closed, 90\" (7'6\") opened", "43\"",
-      "15 lbs empty, 35 lbs filled with water",
-      "+ 55 C – + 130 F", "Ships via UPS"
+      "5.35\" closed, 90\" (7'6\") opened", "43\"", "15 lbs empty, 35 lbs filled with water",
+      "High strength HDPE plastic", "Ships via UPS"
   };
   private String[][] descriptions = {
       movitDescription, minitDescription, xtenditDescription, multiGateDescription

@@ -2,7 +2,6 @@ package com.mlrinternational.barrierplan.ui.calculate;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierItem;
@@ -21,7 +19,6 @@ import com.mlrinternational.barrierplan.ui.base.BarrierPlanFragmentListener;
 import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class MultipleBarrierTypeAdapter
     extends RecyclerView.Adapter<MultipleBarrierTypeAdapter.BarrierTypeViewHolder> {
@@ -57,9 +54,10 @@ public class MultipleBarrierTypeAdapter
           .getResources()
           .getDrawable(((BarrierType) item).getLogo()));
     } else if (item instanceof CustomBarrier) {
+      holder.textType.setVisibility(View.VISIBLE);
+      holder.imgType.setVisibility(View.GONE);
       holder.textType.setText(item.getType());
     }
-
     holder.delete.setOnClickListener(
         v -> {
           removeItem(position);
@@ -101,15 +99,24 @@ public class MultipleBarrierTypeAdapter
     holder.textObserver.dispose();
   }
 
+  //@Override public long getItemId(final int position) {
+  //  final BarrierItem item = items.get(position);
+  //  if (item instanceof BarrierType) {
+  //    return ((BarrierType) item).ordinal();
+  //  } else {
+  //    return item.getType().hashCode();
+  //  }
+  //}
+
   public void addItem(final BarrierItem item) {
     items.add(item);
-    notifyDataSetChanged();
+    notifyItemChanged(items.size() - 1);
   }
 
   public void removeItem(final int position) {
     items.remove(position);
     notifyItemRemoved(position);
-    notifyItemRangeChanged(position, getItemCount());
+    notifyDataSetChanged();
   }
 
   class BarrierTypeViewHolder extends RecyclerView.ViewHolder {

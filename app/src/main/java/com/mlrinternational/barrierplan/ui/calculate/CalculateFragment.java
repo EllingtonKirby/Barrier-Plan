@@ -313,5 +313,6 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     }
     multiCalcData.put(barrierItem.getType(), Pair.create(barrierItem, 0));
     adapter.addItem(barrierItem);
+    updateTotals(barrierItem, 0);
   }
 }
