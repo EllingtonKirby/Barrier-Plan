@@ -39,7 +39,8 @@ public class ProductsFragment extends BaseBarrierPlanFragment implements
   private ProductsImageGalleryAdapter imageGalleryAdapter;
 
   private int[] movitResources = {
-      R.drawable.movit1, R.drawable.movit2, R.drawable.movit3, R.drawable.movit4
+      R.drawable.movit2, R.drawable.rsz_1img_20150806_185235157_2_1, R.drawable.rsz_dsc00183_2,
+      R.drawable.rsz_img_4652_2
   };
   private int[] minitResources = {
       R.drawable.minit1, R.drawable.minit2, R.drawable.minit3, R.drawable.minit4
@@ -48,7 +49,7 @@ public class ProductsFragment extends BaseBarrierPlanFragment implements
       R.drawable.rsz_xtendit
   };
   private int[] multiGateResources = {
-      R.drawable.multi_gate
+      R.drawable.multi_gate, R.drawable.rsz_mlrinternational_images11
   };
   private int[][] resourceList = {
       movitResources, minitResources, xtenditResources, multiGateResources
@@ -58,7 +59,7 @@ public class ProductsFragment extends BaseBarrierPlanFragment implements
       "+131F,-4F (+55C,-20C)", "Ships via LTL"
   };
   private String[] minitDescription = {
-      "4'1\" (49\")", "3'3\" (39\")", "15.4 lbs", "+131F,-4F (+55C,-20C)", "Ships via LTL"
+      "4'1\" (49\")", "3'3\" (39\")", "15.4 lbs", "", "Ships via LTL"
   };
 
   private String[] xtenditDescription = {
@@ -66,8 +67,9 @@ public class ProductsFragment extends BaseBarrierPlanFragment implements
   };
 
   private String[] multiGateDescription = {
-      "5.35\" closed, 90\" (x ft) opened", "43\"", "15 lbs empty, 35 lbs filled with water",
-      "+ 55 C – + 130 F", "Ships via LTL"
+      "Made from high strength HDPE plastic. 5.35\" closed, 90\" (7'6\") opened", "43\"",
+      "15 lbs empty, 35 lbs filled with water",
+      "+ 55 C – + 130 F", "Ships via UPS"
   };
   private String[][] descriptions = {
       movitDescription, minitDescription, xtenditDescription, multiGateDescription

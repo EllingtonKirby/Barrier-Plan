@@ -211,15 +211,9 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     int totalBarriers = 0;
     for (Pair<BarrierItem, Integer> pair : multiCalcData.values()) {
       if (currentMetric == Metric.IMPERIAL) {
-        totalLength +=
-            BarrierType.XTENDIT.getType().equals(pair.first.getType()) ?
-            (pair.second / 2) * pair.first.getLengthImperial() :
-            pair.second * pair.first.getLengthImperial();
+        totalLength += pair.second * pair.first.getLengthImperial();
       } else {
-        totalLength +=
-            BarrierType.XTENDIT.getType().equals(pair.first.getType()) ?
-            (pair.second / 2) * pair.first.getLengthMetric() :
-            pair.second * pair.first.getLengthMetric();
+        totalLength += pair.second * pair.first.getLengthMetric();
       }
       totalBarriers += pair.second;
     }

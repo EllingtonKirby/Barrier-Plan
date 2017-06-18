@@ -74,9 +74,7 @@ public class MultipleBarrierTypeAdapter
             charSequence -> {
               final Double value = Double.valueOf(charSequence.toString());
               final String barrier = value == 1 ? "Barricade" : "Barricades";
-              final int numBarriers = BarrierType.XTENDIT.getType().equals(item.getType()) ?
-                                      fragmentListener.getCalculation(value, item).first * 2 :
-                                      fragmentListener.getCalculation(value, item).first;
+              final int numBarriers = fragmentListener.getCalculation(value, item).first;
               final String result = String.format(
                   format,
                   numBarriers,

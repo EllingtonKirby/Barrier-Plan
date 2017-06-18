@@ -11,7 +11,7 @@ public enum BarrierType implements BarrierItem {
 
   MOVIT("Movit", 191.77, 75.5, R.drawable.movit_logo),
   MINIT("Minit", 118.11, 46.5, R.drawable.minit_logo),
-  XTENDIT("Xtendit", 154.94, 61,  R.drawable.xtendit_logo),
+  XTENDIT("Xtendit", 77.47, 30.5,  R.drawable.xtendit_logo),
   MULTIGATE("Multi-Gate", 0, 0 , R.drawable.multi_gate_logo);
 
   private String type;
