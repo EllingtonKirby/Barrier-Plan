@@ -230,12 +230,12 @@ public class LandingActivity extends BaseActivity<LandingPresenter, LandingView>
   private void setUpUnitsDialog() {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setTitle(R.string.choose_units);
-    builder.setNeutralButton(R.string.feet, (dialog, id) -> {
+    builder.setNeutralButton(R.string.linear_feet, (dialog, id) -> {
       presenter.onUnitsChanged();
       unitChanged.onNext(presenter.getMetricString());
       dialog.dismiss();
     });
-    builder.setNegativeButton(R.string.meters, (dialog, id) -> {
+    builder.setNegativeButton(R.string.linear_meters, (dialog, id) -> {
       presenter.onUnitsChanged();
       unitChanged.onNext(presenter.getMetricString());
       dialog.dismiss();

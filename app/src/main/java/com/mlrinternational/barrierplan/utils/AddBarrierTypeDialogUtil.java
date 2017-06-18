@@ -3,6 +3,7 @@ package com.mlrinternational.barrierplan.utils;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,7 +101,7 @@ public class AddBarrierTypeDialogUtil {
     final AlertDialog dialog = new AlertDialog.Builder(context).setView(view).create();
     final TextView selectedDate = ButterKnife.findById(view, R.id.selected_date);
     final Button datePicker = ButterKnife.findById(view, R.id.date_picker);
-    final EditText name = ButterKnife.findById(view, R.id.event_name);
+    final TextInputEditText name = ButterKnife.findById(view, R.id.event_name);
     final TextView save = ButterKnife.findById(view, R.id.save_button);
     save.setVisibility(View.GONE);
     final TextView cancel = ButterKnife.findById(view, R.id.cancel);

@@ -140,6 +140,8 @@ public class CalculateFragment extends BaseBarrierPlanFragment
     btnMovitDisposable.dispose();
     metricChangedDisposable.dispose();
     btnAddBarrierTypeDisposable.dispose();
+    btnXtenditDisposable.dispose();
+    btnXtenditDisposable = null;
     btnAddBarrierTypeDisposable = null;
     metricChangedDisposable = null;
     metricChanged = null;
@@ -171,6 +173,13 @@ public class CalculateFragment extends BaseBarrierPlanFragment
 
   @Override public void addXtendit() {
     setUpMultiView(BarrierType.XTENDIT);
+  }
+
+  @Override public void onItemDeleteSelected(final String type, final int position) {
+    if (multiCalcData.containsKey(type)) {
+      multiCalcData.remove(type);
+      updateTotals(null, 0);
+    }
   }
 
   @Override public void saveMultiBarrierEvent(final String name, final Date date) {

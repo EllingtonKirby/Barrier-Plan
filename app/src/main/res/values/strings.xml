@@ -7,12 +7,14 @@
   <string name="multi_barrier_calculator">Multiple Barricade-Types Calculator</string>
   <string name="length_needed">Length Needed = </string>
   <string name="feet">lft</string>
+  <string name="linear_feet">Linear Feet (lft)</string>
+  <string name="linear_meters">Linear Meters (lm)</string>
   <string name="result">Result</string>
   <string name="zero">0</string>
   <string name="barriers">Barricades</string>
   <string name="remainder">Remainder</string>
   <string name="add_barrier_type">Add a Barricade Type</string>
-  <string name="barrier_plan">Barricade Plan</string>
+  <string name="barrier_plan">Barricade Planner</string>
   <string name="metric">Units</string>
   <string name="contact">Contact</string>
   <string name="choose_units">Choose the units</string>

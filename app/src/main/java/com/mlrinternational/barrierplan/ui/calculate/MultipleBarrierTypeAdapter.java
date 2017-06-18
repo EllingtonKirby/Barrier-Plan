@@ -2,6 +2,7 @@ package com.mlrinternational.barrierplan.ui.calculate;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.mlrinternational.barrierplan.R;
 import com.mlrinternational.barrierplan.data.BarrierItem;
@@ -19,6 +21,7 @@ import com.mlrinternational.barrierplan.ui.base.BarrierPlanFragmentListener;
 import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MultipleBarrierTypeAdapter
     extends RecyclerView.Adapter<MultipleBarrierTypeAdapter.BarrierTypeViewHolder> {
@@ -57,13 +60,20 @@ public class MultipleBarrierTypeAdapter
       holder.textType.setText(item.getType());
     }
 
+    holder.delete.setOnClickListener(
+        v -> {
+          removeItem(position);
+          listener.onItemDeleteSelected(item.getType(), position);
+        }
+    );
+
     holder.textObserver = RxTextView
         .textChanges(holder.editText)
         .filter(charSequence -> charSequence.length() > 0)
         .subscribe(
             charSequence -> {
               final Double value = Double.valueOf(charSequence.toString());
-              final String barrier = value == 1 ? "Barrier" : "Barriers";
+              final String barrier = value == 1 ? "Barricade" : "Barricades";
               final int numBarriers = BarrierType.XTENDIT.getType().equals(item.getType()) ?
                                       fragmentListener.getCalculation(value, item).first * 2 :
                                       fragmentListener.getCalculation(value, item).first;
@@ -98,12 +108,19 @@ public class MultipleBarrierTypeAdapter
     notifyDataSetChanged();
   }
 
+  public void removeItem(final int position) {
+    items.remove(position);
+    notifyItemRemoved(position);
+    notifyItemRangeChanged(position, getItemCount());
+  }
+
   class BarrierTypeViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.entry_length) EditText editText;
     @BindView(R.id.img_type) ImageView imgType;
     @BindView(R.id.title) TextView textType;
     @BindView(R.id.barrier_total) TextView barrierTotal;
+    @BindView(R.id.delete) ImageView delete;
     private Disposable textObserver;
 
     public BarrierTypeViewHolder(final View itemView) {

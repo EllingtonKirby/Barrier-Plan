@@ -4,4 +4,6 @@ import com.mlrinternational.barrierplan.data.BarrierItem;
 
 interface MultipleBarrierCalcListener {
   void updateTotals(final BarrierItem barrierItem, final int numBarriers);
+
+  void onItemDeleteSelected(final String type, int position);
 }

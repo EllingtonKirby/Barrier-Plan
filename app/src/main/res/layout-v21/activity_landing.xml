@@ -36,7 +36,6 @@
             android:layout_width="@dimen/spacing_100dp"
             android:layout_height="@dimen/spacing_56dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/spacing_16dp"
             android:layout_toEndOf="@id/toolbar_title"
             android:src="@drawable/mlr_logo_transparent"
             android:visibility="visible"

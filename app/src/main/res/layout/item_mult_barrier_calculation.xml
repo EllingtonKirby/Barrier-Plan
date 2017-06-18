@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     >
   <android.support.design.widget.TextInputLayout
-      android:layout_width="@dimen/spacing_80dp"
+      android:layout_width="@dimen/spacing_60dp"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       >
@@ -15,17 +15,19 @@
         android:id="@+id/entry_length"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
         android:hint="@string/length"
-        android:inputType="number"
+        android:inputType="numberDecimal"
+        android:textSize="@dimen/text_size_14sp"
         />
   </android.support.design.widget.TextInputLayout>
 
   <ImageView
       android:id="@+id/img_type"
-      android:layout_width="@dimen/spacing_100dp"
+      android:layout_width="@dimen/spacing_80dp"
       android:layout_height="@dimen/spacing_20dp"
       android:layout_gravity="center"
-      android:layout_marginStart="@dimen/spacing_16dp"
+      android:layout_marginStart="@dimen/spacing_8dp"
       android:visibility="gone"
       />
 
@@ -34,10 +36,10 @@
       android:layout_width="@dimen/spacing_100dp"
       android:layout_height="@dimen/spacing_40dp"
       android:layout_gravity="center"
-      android:layout_marginStart="@dimen/spacing_16dp"
+      android:layout_marginStart="@dimen/spacing_8dp"
       android:gravity="center"
       android:maxLines="1"
-      android:textSize="@dimen/text_size_20sp"
+      android:textSize="@dimen/text_size_14sp"
       android:textStyle="bold"
       />
 
@@ -46,9 +48,18 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:layout_marginStart="@dimen/spacing_16dp"
+      android:layout_marginStart="@dimen/spacing_8dp"
       android:text="@string/zero"
-      android:textSize="@dimen/text_size_20sp"
+      android:textSize="@dimen/text_size_14sp"
+      />
+
+  <ImageView
+      android:id="@+id/delete"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginStart="@dimen/spacing_8dp"
+      android:src="@drawable/ic_delete_black_24dp"
       />
 
 </LinearLayout>

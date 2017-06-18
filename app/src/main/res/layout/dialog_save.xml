@@ -23,13 +23,20 @@
         android:gravity="center"
         >
       <TextView
-          android:layout_marginRight="@dimen/spacing_4dp"
+          android:layout_marginEnd="@dimen/spacing_4dp"
           android:text="@string/event_name"
           />
-      <EditText
-          android:id="@+id/event_name"
+      <android.support.design.widget.TextInputLayout
           android:layout_width="@dimen/spacing_200dp"
-          />
+          android:layout_height="wrap_content"
+          >
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/event_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+      </android.support.design.widget.TextInputLayout>
     </TableRow>
     <TableRow
         android:gravity="center">
