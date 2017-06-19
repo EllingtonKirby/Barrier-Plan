@@ -59,7 +59,8 @@ public class ProductsFragment extends BaseBarrierPlanFragment implements
       "Ships via LTL"
   };
   private String[] minitDescription = {
-      "4'1\" (49\")", "3'3\" (39\")", "15.4 lbs (7kg)", "High Strength Polypropylene", "Ships via LTL"
+      "4'1\" (49\")", "3'3\" (39\")", "15.4 lbs (7kg)", "High Strength Polypropylene",
+      "Ships via LTL"
   };
 
   private String[] xtenditDescription = {
@@ -67,7 +68,8 @@ public class ProductsFragment extends BaseBarrierPlanFragment implements
   };
 
   private String[] multiGateDescription = {
-      "5.35\" closed, 90\" (7'6\") opened", "43\"", "15 lbs empty, 35 lbs filled with water",
+      "5.35\" closed, 90\" (7'6\") opened", "43\"",
+      "15 lbs (6.8kg) empty, 35 (15.8kg) lbs filled with water",
       "High strength HDPE plastic", "Ships via UPS"
   };
   private String[][] descriptions = {
